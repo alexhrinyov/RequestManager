@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace RequestManager.Infrastructure.Commands.Base
 {
+    /// <summary>
+    /// Базовый класс всех комманд(реализует ICommand)
+    /// </summary>
     internal abstract class Command : ICommand
     {
         public event EventHandler? CanExecuteChanged
