@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
+        xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
         xmlns:local="clr-namespace:RequestManager"
         mc:Ignorable="d"
         Title="Менеджер запросов" Height="450" Width="800">
@@ -31,6 +32,12 @@
                             <ComboBox Height="30" Width="150" Margin="3" VerticalAlignment="Top"></ComboBox>
                             <ComboBox Height="30" Width="150" Margin="3" VerticalAlignment="Top"></ComboBox>
                         </StackPanel>
+                        <Button Margin="50,5,50,5" Command="{Binding ShowMessageCommand}">Hello World</Button>
+                        <Button Margin="50,5,50,5">Close Application
+                            <Button.Command>
+                                <cmd:CloseAppCommand/>
+                            </Button.Command>
+                        </Button>
                     </StackPanel>
                     
                 </Grid>
