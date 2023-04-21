@@ -8,6 +8,28 @@
         xmlns:local="clr-namespace:RequestManager"
         mc:Ignorable="d"
         Title="Менеджер запросов" Height="450" Width="800">
+    <Window.Resources>
+        <Style  TargetType="Button">
+            <Setter Property="FontFamily" Value="Arial" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <Style  TargetType="Label">
+            <Setter Property="FontFamily" Value="Arial" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Light" />
+        </Style>
+        <Style  TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Arial" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+
+    </Window.Resources>
+    
     <Window.DataContext>
         <vm:RequestViewModel/>
     </Window.DataContext>
@@ -20,26 +42,27 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" >
-                            <Label VerticalAlignment="Top" Margin="47,1,1,1" Height="40" FontSize="14">Год:</Label>
-                            <Label VerticalAlignment="Top" Margin="80,1,1,1"  Height="40" FontSize="14">Месяц:</Label>
-                            <Label VerticalAlignment="Top" Margin="70,1,1,1" Height="40" FontSize="14">Отправитель:</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <StackPanel Orientation="Vertical" >
+                            <Label >Год:</Label>
+                            <ComboBox  VerticalAlignment="Top"></ComboBox>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal"  >
-                            <Label VerticalAlignment="Top" Margin="1,1,1,1" Height="40" FontSize="14">Фильтры:</Label>
-                            <ComboBox Height="30" Width="150" Margin="3" VerticalAlignment="Top"></ComboBox>
-                            <ComboBox Height="30" Width="150" Margin="3" VerticalAlignment="Top"></ComboBox>
-                            <ComboBox Height="30" Width="150" Margin="3" VerticalAlignment="Top"></ComboBox>
+                        <StackPanel Orientation="Vertical" >
+                            <Label >Месяц:</Label>
+                            <ComboBox  VerticalAlignment="Top"></ComboBox>
                         </StackPanel>
-                        <Button Margin="50,5,50,5" Command="{Binding ShowMessageCommand}">Hello World</Button>
-                        <Button Margin="50,5,50,5">Close Application
+                        <StackPanel Orientation="Vertical" >
+                            <Label >Отправитель:</Label>
+                            <ComboBox  VerticalAlignment="Top"></ComboBox>
+                        </StackPanel>
+
+                        <Button Margin="5" VerticalAlignment="Top" Command="{Binding ShowMessageCommand}">Hello World</Button>
+                        <Button Margin="5" VerticalAlignment="Top">Close Application
                             <Button.Command>
                                 <cmd:CloseAppCommand/>
                             </Button.Command>
                         </Button>
                     </StackPanel>
-                    
                 </Grid>
             </TabItem>
             <TabItem Header="Детали запроса"></TabItem>
