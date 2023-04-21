@@ -43,13 +43,14 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Label>Фильтры:</Label>
                         <StackPanel Orientation="Vertical" >
                             <Label >Год:</Label>
-                            <ComboBox  VerticalAlignment="Top"></ComboBox>
+                            <ComboBox x:Name="YearsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=Years}"></ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" >
                             <Label >Месяц:</Label>
-                            <ComboBox  VerticalAlignment="Top"></ComboBox>
+                            <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path =}"></ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" >
                             <Label >Отправитель:</Label>

@@ -13,7 +13,7 @@ namespace RequestManager.ViewModels
 {
     internal class RequestViewModel: ViewModel
     {
-        #region Примеры свойств
+        #region Свойства
         //private int id;
         //private string date;
         //private string sender;
@@ -30,6 +30,27 @@ namespace RequestManager.ViewModels
         //    set => Set(ref sender, value);
 
         //}
+        public List<int> Years { get;} = new List<int>() { DateTime.Now.Year, DateTime.Now.Year-1, DateTime.Now.Year-2 };
+        public List<Months> MonthsList { get; } = new List<Months> { Months.Август}
+        
+        
+        public enum Months
+        {
+            Январь,
+            Февраль,
+            Март,
+            Апрель,
+            Май,
+            Июнь,
+            Июль,
+            Август,
+            Сентябрь,
+            Октябрь,
+            Ноябрь,
+            Декабрь
+        }
+
+
         #endregion
 
         #region Команды
@@ -53,6 +74,7 @@ namespace RequestManager.ViewModels
         {
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
+            
         }
     }
 }
