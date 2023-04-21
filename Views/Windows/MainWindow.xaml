@@ -28,6 +28,23 @@
             <Setter Property="Width" Value="100"/>
         </Style>
 
+        <!-- DataGridColumnHeader style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Width" Value="auto" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="ColumnWidth" Value="*"/>
+        </Style>
+
+
+
     </Window.Resources>
     
     <Window.DataContext>
@@ -39,7 +56,7 @@
             <TabItem Header="Запросы">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="100"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -50,7 +67,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" >
                             <Label >Месяц:</Label>
-                            <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path =}"></ComboBox>
+                            <ComboBox x:Name="MonthsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=MonthsList}" ></ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" >
                             <Label >Отправитель:</Label>
@@ -64,9 +81,21 @@
                             </Button.Command>
                         </Button>
                     </StackPanel>
+                    <ScrollViewer Grid.Row="1">
+                        <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Дата создания"/>
+                                <DataGridTextColumn Header="Дата обновления"/>
+                                <DataGridTextColumn Header="Отправитель"/>
+                                <DataGridTextColumn Header="Менеджер"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Детали запроса"></TabItem>
+            <TabItem Header="Установки"></TabItem>
         </TabControl>
     </DockPanel>    
 

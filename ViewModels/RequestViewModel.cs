@@ -31,12 +31,25 @@ namespace RequestManager.ViewModels
 
         //}
         public List<int> Years { get;} = new List<int>() { DateTime.Now.Year, DateTime.Now.Year-1, DateTime.Now.Year-2 };
-        public List<Months> MonthsList { get; } = new List<Months> { Months.Август}
+        public List<Months> MonthsList { get; } = new List<Months> 
+        { Months.Январь, 
+            Months.Февраль, 
+            Months.Март, 
+            Months.Апрель, 
+            Months.Май,
+            Months.Июнь, 
+            Months.Июль, 
+            Months.Август, 
+            Months.Сентябрь, 
+            Months.Октябрь,
+            Months.Ноябрь,
+            Months.Декабрь
+        };
         
         
         public enum Months
         {
-            Январь,
+            Январь = 1,
             Февраль,
             Март,
             Апрель,
