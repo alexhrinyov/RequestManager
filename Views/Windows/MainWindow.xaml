@@ -9,17 +9,21 @@
         mc:Ignorable="d"
         Title="Менеджер запросов" Height="450" Width="800">
     <Window.Resources>
+        <!--Стили кнопок-->
         <Style  TargetType="Button">
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="5" />
         </Style>
+        <!--Стили лэйбэлов-->
         <Style  TargetType="Label">
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="Light" />
         </Style>
+        <!--Стили комбобоксов-->
         <Style  TargetType="ComboBox">
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="FontSize" Value="14" />
@@ -32,7 +36,7 @@
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="Width" Value="auto" />
+            <Setter Property="Margin" Value="2" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="ToolTip" Value="Click to sort."/>
@@ -42,9 +46,6 @@
         <Style TargetType="DataGrid">
             <Setter Property="ColumnWidth" Value="*"/>
         </Style>
-
-
-
     </Window.Resources>
     
     <Window.DataContext>
@@ -53,47 +54,75 @@
 
     <DockPanel>
         <TabControl DockPanel.Dock="Top" Margin="1">
+            
             <TabItem Header="Запросы">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <Label>Фильтры:</Label>
-                        <StackPanel Orientation="Vertical" >
-                            <Label >Год:</Label>
-                            <ComboBox x:Name="YearsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=Years}"></ComboBox>
+                <Page x:Name="MWPage1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!--Панель с фильтрами-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <Label>Фильтры:</Label>
+                            <StackPanel Orientation="Vertical" >
+                                <Label >Год:</Label>
+                                <ComboBox x:Name="YearsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=Years}"></ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" >
+                                <Label >Месяц:</Label>
+                                <ComboBox x:Name="MonthsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=MonthsList}" ></ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" >
+                                <Label >Отправитель:</Label>
+                                <ComboBox  VerticalAlignment="Top"></ComboBox>
+                            </StackPanel>
+
+                            <Button Margin="5" VerticalAlignment="Top" Command="{Binding ShowMessageCommand}">Hello World</Button>
+                            <Button Margin="5" VerticalAlignment="Top">Close Application
+                                <Button.Command>
+                                    <cmd:CloseAppCommand/>
+                                </Button.Command>
+                            </Button>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" >
-                            <Label >Месяц:</Label>
-                            <ComboBox x:Name="MonthsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=MonthsList}" ></ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" >
-                            <Label >Отправитель:</Label>
-                            <ComboBox  VerticalAlignment="Top"></ComboBox>
+                        <!--Таблица с данными-->
+                        <ScrollViewer Grid.Row="1">
+                            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Дата создания"/>
+                                    <DataGridTextColumn Header="Дата обновления"/>
+                                    <DataGridTextColumn Header="Отправитель"/>
+                                    <DataGridTextColumn Header="Менеджер"/>
+                                    <DataGridTextColumn Header="Исполнитель"/>
+                                </DataGrid.Columns>
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Новый расчёт"></MenuItem>
+                                        <MenuItem Header="Перейти"></MenuItem>
+                                        <MenuItem Header="Копировать"></MenuItem>
+                                        <MenuItem Header="Вставить"></MenuItem>
+                                        <MenuItem Header="Удалить"></MenuItem>
+                                    </ContextMenu>
+
+
+                                </DataGrid.ContextMenu>
+                            </DataGrid>
+                        </ScrollViewer>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Row="2">
+                            <Button  Width="100"  >Обновить</Button>
+                            <Button  Width="100" >Закрыть
+                                <Button.Command>
+                                    <cmd:CloseAppCommand/>
+                                </Button.Command>
+                            </Button>
                         </StackPanel>
 
-                        <Button Margin="5" VerticalAlignment="Top" Command="{Binding ShowMessageCommand}">Hello World</Button>
-                        <Button Margin="5" VerticalAlignment="Top">Close Application
-                            <Button.Command>
-                                <cmd:CloseAppCommand/>
-                            </Button.Command>
-                        </Button>
-                    </StackPanel>
-                    <ScrollViewer Grid.Row="1">
-                        <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="Дата создания"/>
-                                <DataGridTextColumn Header="Дата обновления"/>
-                                <DataGridTextColumn Header="Отправитель"/>
-                                <DataGridTextColumn Header="Менеджер"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </ScrollViewer>
-                    
-                </Grid>
+                    </Grid>
+
+                </Page>
+                
             </TabItem>
             <TabItem Header="Установки"></TabItem>
         </TabControl>

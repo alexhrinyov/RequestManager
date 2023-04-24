@@ -20,6 +20,8 @@ namespace RequestManager.Infrastructure.Commands
         public override void Execute(object? parameter)
         {
             Application.Current.Shutdown();
+            
         }
+
     }
 }

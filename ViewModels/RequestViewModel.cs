@@ -1,5 +1,6 @@
 ﻿using RequestManager.Infrastructure.Commands;
 using RequestManager.ViewModels.Base;
+using RequestManager.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace RequestManager.ViewModels
@@ -62,6 +65,20 @@ namespace RequestManager.ViewModels
             Ноябрь,
             Декабрь
         }
+       
+        private PageContent currentPage;
+        /// <summary>
+        /// Текущая страница
+        /// </summary>
+        public PageContent CurrentPage
+        {
+            get { return currentPage; }
+            set => Set(ref currentPage, value);
+        }
+        /// <summary>
+        /// Страница Мастера запросов
+        /// </summary>
+        public Page RequestMasterPage { get; set; }
 
 
         #endregion
@@ -76,6 +93,14 @@ namespace RequestManager.ViewModels
         private bool CanShowMessageCommandExecuted(object p) => true;
 
         #endregion
+
+        public ICommand ShowAnotherPage { get; }
+        private void OnShowAnotherPageExecuted(object p)
+        {
+            RequestMasterPage = new RequestMaster();
+            CurrentPage = RequestMasterPage
+        }
+        private bool CanShowAnotherPageExecuted(object p) => true;
 
 
 
