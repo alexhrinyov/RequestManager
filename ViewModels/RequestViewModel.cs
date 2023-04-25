@@ -70,14 +70,14 @@ namespace RequestManager.ViewModels
         /// <summary>
         /// Текущая страница
         /// </summary>
-        public Page CurrentPage 
+        public Page CurrentPage
         {
             get { return currentPage; }
             set => Set(ref currentPage, value);
         }
-            /// <summary>
-            /// Страница Мастера запросов
-            /// </summary>
+        /// <summary>
+        /// Страница Мастера запросов
+        /// </summary>
         public Page RequestMasterPage { get; set; }
         public Page MainPage { get; set; }
 
@@ -94,17 +94,21 @@ namespace RequestManager.ViewModels
         private bool CanShowMessageCommandExecuted(object p) => true;
 
         #endregion
-
-        public ICommand ShowAnotherPageCommand;
+        #region Создание нового расчёта
+        /// <summary>
+        /// Переход на следующую страницу создания запроса
+        /// </summary>
+        public ICommand ShowAnotherPageCommand { get; }
         private void OnShowAnotherPageExecuted(object p)
         {
-            
-            CurrentPage = RequestMasterPage;
-            
+           // Меняем текущую страницу и устанавливаем ей текущий контекст viewModel
+            CurrentPage = new RequestMaster();
+            CurrentPage.DataContext = this;
+   
         }
         private bool CanShowAnotherPageExecuted(object p) => true;
 
-
+        #endregion
 
 
 
@@ -116,7 +120,10 @@ namespace RequestManager.ViewModels
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
+            //Начальная страница и её контекст данных
             CurrentPage = new MainPage();
+            CurrentPage.DataContext = this;
+
 
         }
     }
