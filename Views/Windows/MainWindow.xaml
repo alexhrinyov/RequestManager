@@ -4,19 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
-        xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
-        xmlns:local="clr-namespace:RequestManager"
         mc:Ignorable="d"
         Title="Менеджер запросов" Height="450" Width="800">
     <Window.DataContext>
-        <vm:RequestViewModel/>
+        <vm:RequestViewModel></vm:RequestViewModel>
     </Window.DataContext>
 
     <DockPanel>
         <TabControl DockPanel.Dock="Top" Margin="1">
             
             <TabItem Header="Запросы">
-                <Frame x:Name="MainFrame" Content="{Binding CurrentPage}"/>
+                <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" />
             </TabItem>
             <TabItem Header="Установки"></TabItem>
         </TabControl>

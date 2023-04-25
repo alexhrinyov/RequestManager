@@ -75,10 +75,10 @@ namespace RequestManager.ViewModels
             get { return currentPage; }
             set => Set(ref currentPage, value);
         }
-/// <summary>
-/// Страница Мастера запросов
-/// </summary>
-public Page RequestMasterPage { get; set; }
+            /// <summary>
+            /// Страница Мастера запросов
+            /// </summary>
+        public Page RequestMasterPage { get; set; }
         public Page MainPage { get; set; }
 
 
@@ -95,7 +95,7 @@ public Page RequestMasterPage { get; set; }
 
         #endregion
 
-        public ICommand ShowAnotherPageCommand { get; }
+        public ICommand ShowAnotherPageCommand;
         private void OnShowAnotherPageExecuted(object p)
         {
             
@@ -112,11 +112,11 @@ public Page RequestMasterPage { get; set; }
 
         public RequestViewModel()
         {
-            RequestMasterPage = new RequestMaster();
+          
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
-            
+            CurrentPage = new MainPage();
 
         }
     }

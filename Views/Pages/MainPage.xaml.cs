@@ -24,8 +24,8 @@ namespace RequestManager.Views.Pages
         {
             InitializeComponent();
             // Делаем текущий год и текущий месяц выбранными по умолчанию
-            YearsBox.SelectedIndex = 0;
-            MonthsBox.SelectedIndex = DateTime.Now.Month - 1;
+            //YearsBox.SelectedIndex = 0;
+            //MonthsBox.SelectedIndex = DateTime.Now.Month - 1;
         }
     }
 }

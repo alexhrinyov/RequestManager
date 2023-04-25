@@ -25,8 +25,7 @@ namespace RequestManager
         public MainWindow()
         {
             InitializeComponent();
-            
-            MainFrame.Content = new MainPage();
+
         }
 
         
