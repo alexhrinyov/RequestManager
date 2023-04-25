@@ -1,6 +1,4 @@
-﻿using RequestManager.ViewModels;
-using RequestManager.Views.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,20 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RequestManager
+namespace RequestManager.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для MainPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainPage : Page
     {
-        public MainWindow()
+        public MainPage()
         {
             InitializeComponent();
-            
-            MainFrame.Content = new MainPage();
+            // Делаем текущий год и текущий месяц выбранными по умолчанию
+            YearsBox.SelectedIndex = 0;
+            MonthsBox.SelectedIndex = DateTime.Now.Month - 1;
         }
-
-        
     }
 }

@@ -65,20 +65,21 @@ namespace RequestManager.ViewModels
             Ноябрь,
             Декабрь
         }
-       
-        private PageContent currentPage;
+
+        private Page currentPage;
         /// <summary>
         /// Текущая страница
         /// </summary>
-        public PageContent CurrentPage
+        public Page CurrentPage 
         {
             get { return currentPage; }
             set => Set(ref currentPage, value);
         }
-        /// <summary>
-        /// Страница Мастера запросов
-        /// </summary>
-        public Page RequestMasterPage { get; set; }
+/// <summary>
+/// Страница Мастера запросов
+/// </summary>
+public Page RequestMasterPage { get; set; }
+        public Page MainPage { get; set; }
 
 
         #endregion
@@ -94,11 +95,12 @@ namespace RequestManager.ViewModels
 
         #endregion
 
-        public ICommand ShowAnotherPage { get; }
+        public ICommand ShowAnotherPageCommand { get; }
         private void OnShowAnotherPageExecuted(object p)
         {
-            RequestMasterPage = new RequestMaster();
-            CurrentPage = RequestMasterPage
+            
+            CurrentPage = RequestMasterPage;
+            
         }
         private bool CanShowAnotherPageExecuted(object p) => true;
 
@@ -110,9 +112,12 @@ namespace RequestManager.ViewModels
 
         public RequestViewModel()
         {
+            RequestMasterPage = new RequestMaster();
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
+            ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
             
+
         }
     }
 }
