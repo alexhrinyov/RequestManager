@@ -80,7 +80,7 @@
             </DataGrid>
         </ScrollViewer>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Row="2">
-            <Button  Width="100"  >Обновить</Button>
+            <Button  Width="100" >Обновить</Button>
             <Button  Width="100" >Закрыть
                 <Button.Command>
                     <cmd:CloseAppCommand/>
