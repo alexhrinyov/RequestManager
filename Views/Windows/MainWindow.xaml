@@ -14,7 +14,7 @@
         <TabControl DockPanel.Dock="Top" Margin="1">
             
             <TabItem Header="Запросы">
-                <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Visible" />
+                <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Hidden" />
             </TabItem>
             <TabItem Header="Установки"></TabItem>
         </TabControl>
