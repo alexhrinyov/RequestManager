@@ -24,20 +24,11 @@ namespace RequestManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        string sAttr;
+        
         public MainWindow()
         {
             InitializeComponent();
-            try
-            {
-                sAttr = ConfigurationManager.AppSettings.Get("Key0");
-                MessageBox.Show(sAttr);
-
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
+            
 
         }
 

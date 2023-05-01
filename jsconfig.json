@@ -1,0 +1,8 @@
+{
+  "Managers": [ "Сычёв", "Иванов" ],
+  "Executors": [ "Гринёв", "Плехоткин" ],
+  "Fonts": {
+    "Type": "Times New Roman",
+    "Height": 14
+  }
+}
