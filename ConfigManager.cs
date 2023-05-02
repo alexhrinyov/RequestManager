@@ -6,20 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RequestManager.Models.Config;
+using RequestManager.ViewModels.Base;
 
 namespace RequestManager
 {
-    internal class ConfigManager
+    internal class ConfigManager:ViewModel
     {
-        public void DeserializeConfig()
+        public static Configuration DeserializeConfig()
         {
-            
-
             Configuration configuration = new Configuration();
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "config.json");
             //Десериализация
             configuration = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(filePath));
-            Console.WriteLine("Success");
+            return configuration;
             //Сериализация
             //string json = JsonConvert.SerializeObject(points, Formatting.Indented);
             //File.WriteAllText(filePath, json);

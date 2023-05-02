@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
       xmlns:vm="clr-namespace:RequestManager.ViewModels"
+      xmlns:cfg="clr-namespace:RequestManager.Models.Config"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -26,6 +27,7 @@
     </Page.Resources>
 
 
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
@@ -43,9 +45,9 @@
                 <Label >Месяц:</Label>
                 <ComboBox x:Name="MonthsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=MonthsList}" ></ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Vertical" >
+            <StackPanel Orientation="Vertical">
                 <Label >Отправитель:</Label>
-                <ComboBox  VerticalAlignment="Top"></ComboBox>
+                <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path=Managers}"></ComboBox>
             </StackPanel>
 
             <Button Margin="5" VerticalAlignment="Top" Command="{Binding Path= ShowMessageCommand}">Hello World</Button>

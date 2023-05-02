@@ -16,7 +16,9 @@
             <TabItem Header="Запросы">
                 <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Hidden" />
             </TabItem>
-            <TabItem Header="Установки"></TabItem>
+            <TabItem Header="Установки">
+                
+            </TabItem>
         </TabControl>
     </DockPanel>    
 

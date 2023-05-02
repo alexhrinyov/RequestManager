@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RequestManager.Models.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace RequestManager.Views.Pages
         public MainPage()
         {
             InitializeComponent();
+
             // Делаем текущий год и текущий месяц выбранными по умолчанию
             //YearsBox.SelectedIndex = 0;
             //MonthsBox.SelectedIndex = DateTime.Now.Month - 1;

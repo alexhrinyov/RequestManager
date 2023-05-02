@@ -11,5 +11,12 @@ namespace RequestManager.Models.Config
         public List<string> Managers { get; set; }
         public List<string> Executors { get; set; }
         public Fonts Fonts { get; set; }
+
+        public Configuration()
+        {
+            Configuration configuration = ConfigManager.DeserializeConfig();
+            this.Managers = configuration.Managers;
+        }
+
     }
 }
