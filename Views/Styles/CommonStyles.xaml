@@ -14,7 +14,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="NormalBorder"  CornerRadius="2" Background="DarkGray" BorderBrush="Wheat" BorderThickness="1">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
                         </ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -55,6 +55,14 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Width" Value="100"/>
+    </Style>
+    <!--Стили листбоксов-->
+    <Style  TargetType="ListBox">
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Width" Value="200"/>
     </Style>
 
 </ResourceDictionary>

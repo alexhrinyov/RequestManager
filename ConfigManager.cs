@@ -10,22 +10,35 @@ using RequestManager.ViewModels.Base;
 
 namespace RequestManager
 {
-    internal class ConfigManager:ViewModel
+    internal class ConfigManager
     {
+        /// <summary>
+        /// Десериализация конфигурации из файла jsconfig.json
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        private readonly static string filePath = Path.Combine(Directory.GetCurrentDirectory(), "jsconfig.json");
         public static Configuration DeserializeConfig()
         {
             Configuration configuration = new Configuration();
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "config.json");
             //Десериализация
             configuration = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(filePath));
             return configuration;
+            
+        }
+        /// <summary>
+        /// Сериализация конфигурации в файл jsconfig.json
+        /// </summary>
+        /// <param name="configuration"></param>
+        public static void SerializeConfig(Configuration configuration)
+        {
             //Сериализация
-            //string json = JsonConvert.SerializeObject(points, Formatting.Indented);
-            //File.WriteAllText(filePath, json);
+            string json = JsonConvert.SerializeObject(configuration, Formatting.Indented);
+            File.WriteAllText(filePath, json);
             //using (StreamWriter file = new StreamWriter(filePath))
             //{
             //    JsonSerializer serializer = new JsonSerializer();
-            //    serializer.Serialize(file, points);
+            //    serializer.Serialize(file, configuration);
             //}
         }
     }

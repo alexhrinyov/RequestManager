@@ -10,6 +10,7 @@
         <vm:RequestViewModel></vm:RequestViewModel>
     </Window.DataContext>
 
+
     <DockPanel>
         <TabControl DockPanel.Dock="Top" Margin="1">
             
@@ -17,6 +18,15 @@
                 <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Hidden" />
             </TabItem>
             <TabItem Header="Установки">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                    <Label>Менеджеры:</Label>
+                    <ListBox x:Name="ManagersList" ItemsSource="{Binding Path=ConfigObject.Managers}" SelectedItem="{Binding Path=SelectedManager, Mode=TwoWay}"/>
+                    <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя нового менеджера" Text="{Binding NewManager, Mode=TwoWay}"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding Path=AddItemCommand}">Добавить</Button>
+                        <Button Command="{Binding Path=DeleteItemCommand}">Удалить</Button>
+                    </StackPanel>
+                </StackPanel>
                 
             </TabItem>
         </TabControl>

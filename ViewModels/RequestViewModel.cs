@@ -1,4 +1,5 @@
 ﻿using RequestManager.Infrastructure.Commands;
+using RequestManager.Models.Config;
 using RequestManager.ViewModels.Base;
 using RequestManager.Views.Pages;
 using System;
@@ -82,6 +83,23 @@ namespace RequestManager.ViewModels
         public Page MainPage { get; set; }
 
 
+        
+        /// <summary>
+        /// Объект конфигурации из json
+        /// </summary>
+        public Configuration ConfigObject{get; set; }
+
+        
+
+        private string selectedManager;
+        public string SelectedManager
+        {
+            get { return selectedManager; }
+            set => Set(ref selectedManager, value);
+        }
+        
+        public string NewManager { get; set; }
+
         #endregion
 
         #region Команды
@@ -109,6 +127,26 @@ namespace RequestManager.ViewModels
         private bool CanShowAnotherPageExecuted(object p) => true;
 
         #endregion
+        #region Удаление менеджера
+        public ICommand DeleteItemCommand { get; }
+        private void OnDeleteItemCommandExecuted(object p)
+        {
+            ConfigObject.Managers = ConfigObject.Managers.Where(m => m != SelectedManager).ToList();
+            ConfigManager.SerializeConfig(ConfigObject);
+        }
+        private bool CanDeleteItemCommandExecuted(object p) => true;
+
+        #endregion
+        #region Добавление менеджера
+        public ICommand AddItemCommand { get; }
+        private void OnAddItemCommandExecuted(object p)
+        {
+            ConfigObject.Managers = ConfigObject.Managers.Append(NewManager).ToList();
+            ConfigManager.SerializeConfig(ConfigObject);
+        }
+        private bool CanAddItemCommandExecuted(object p) => true;
+
+        #endregion
 
 
 
@@ -120,10 +158,13 @@ namespace RequestManager.ViewModels
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
+            DeleteItemCommand = new LambdaCommand(OnDeleteItemCommandExecuted, CanDeleteItemCommandExecuted);
+            AddItemCommand = new LambdaCommand(OnAddItemCommandExecuted, CanAddItemCommandExecuted);
             //Начальная страница и её контекст данных
             CurrentPage = new MainPage();
             CurrentPage.DataContext = this;
-
+            ConfigObject = ConfigManager.DeserializeConfig();
+            
 
         }
     }

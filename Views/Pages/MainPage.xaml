@@ -6,6 +6,7 @@
       xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
       xmlns:vm="clr-namespace:RequestManager.ViewModels"
       xmlns:cfg="clr-namespace:RequestManager.Models.Config"
+ 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -47,7 +48,9 @@
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <Label >Отправитель:</Label>
-                <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path=Managers}"></ComboBox>
+                <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path=ConfigObject.Managers}">
+                    
+                </ComboBox>
             </StackPanel>
 
             <Button Margin="5" VerticalAlignment="Top" Command="{Binding Path= ShowMessageCommand}">Hello World</Button>
