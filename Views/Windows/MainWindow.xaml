@@ -1,8 +1,8 @@
 ﻿<Window x:Class="RequestManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"                
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                           
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
         mc:Ignorable="d"
         Title="Менеджер запросов" Height="450" Width="800">
@@ -18,15 +18,33 @@
                 <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Hidden" />
             </TabItem>
             <TabItem Header="Установки">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                    <Label>Менеджеры:</Label>
-                    <ListBox x:Name="ManagersList" ItemsSource="{Binding Path=ConfigObject.Managers}" SelectedItem="{Binding Path=SelectedManager, Mode=TwoWay}"/>
-                    <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя нового менеджера" Text="{Binding NewManager, Mode=TwoWay}"></TextBox>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding Path=AddItemCommand}">Добавить</Button>
-                        <Button Command="{Binding Path=DeleteItemCommand}">Удалить</Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="255" VerticalAlignment="Top">
+                    <Border BorderBrush="Gray" BorderThickness="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Label>Менеджеры:</Label>
+                            <ListBox x:Name="ManagersList" ItemsSource="{Binding Path=ConfigObject.Managers}" SelectedItem="{Binding Path=SelectedManager, Mode=TwoWay}"/>
+                            <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя нового менеджера" Text="{Binding NewManager, Mode=TwoWay}"></TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{Binding Path=AddItemCommand}" CommandParameter="manager">Добавить</Button>
+                                <Button Command="{Binding Path=DeleteItemCommand}">Удалить</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Gray" BorderThickness="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Label>Исполнители:</Label>
+                            <ListBox x:Name="ExecutorsList" ItemsSource="{Binding Path=ConfigObject.Executors}" SelectedItem="{Binding Path=SelectedExecutor, Mode=TwoWay}"/>
+                            <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя исполнителя" Text="{Binding NewExecutor, Mode=TwoWay}"></TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{Binding Path=AddItemCommand}" CommandParameter="executor">Добавить</Button>
+                                <Button Command="{Binding Path=DeleteItemCommand}">Удалить</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    
                 </StackPanel>
+                
+                
                 
             </TabItem>
         </TabControl>

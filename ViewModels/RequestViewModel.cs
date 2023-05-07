@@ -49,8 +49,6 @@ namespace RequestManager.ViewModels
             Months.Ноябрь,
             Months.Декабрь
         };
-        
-        
         public enum Months
         {
             Январь = 1,
@@ -92,13 +90,42 @@ namespace RequestManager.ViewModels
         
 
         private string selectedManager;
+        /// <summary>
+        /// Выбранный в Listbox менеджер
+        /// </summary>
         public string SelectedManager
         {
             get { return selectedManager; }
             set => Set(ref selectedManager, value);
         }
-        
-        public string NewManager { get; set; }
+        private string selectedExecutor;
+        /// <summary>
+        /// Выбранный в Listbox исполнитель
+        /// </summary>
+        public string SelectedExecutor
+        {
+            get { return selectedExecutor; }
+            set => Set(ref selectedExecutor, value);
+        }
+        private string? newManager;
+        /// <summary>
+        /// Новый менеджер
+        /// </summary>
+        public string? NewManager
+        {
+            get => newManager;
+            set => Set(ref newManager, value);
+        }
+
+        private string? newExecutor;
+        /// <summary>
+        /// Новый исполнитель
+        /// </summary>
+        public string? NewExecutor
+        {
+            get => newExecutor;
+            set => Set(ref newExecutor, value);
+        }
 
         #endregion
 
@@ -139,10 +166,28 @@ namespace RequestManager.ViewModels
         #endregion
         #region Добавление менеджера
         public ICommand AddItemCommand { get; }
-        private void OnAddItemCommandExecuted(object p)
+        private void OnAddItemCommandExecuted(object parameter)
         {
-            ConfigObject.Managers = ConfigObject.Managers.Append(NewManager).ToList();
-            ConfigManager.SerializeConfig(ConfigObject);
+            switch (parameter)
+            {
+                case "manager":
+                    if (NewManager != null)
+                    {
+                        ConfigObject.Managers = ConfigObject.Managers.Append(NewManager).ToList();
+                        ConfigManager.SerializeConfig(ConfigObject);
+                        NewManager = null;
+                    }
+                    break;
+                case "executor":
+                    if (NewExecutor != null)
+                    {
+                        ConfigObject.Executors = ConfigObject.Executors.Append(NewExecutor).ToList();
+                        ConfigManager.SerializeConfig(ConfigObject);
+                        NewExecutor = null;
+                    }
+                    break;
+            }
+              
         }
         private bool CanAddItemCommandExecuted(object p) => true;
 

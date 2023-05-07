@@ -21,7 +21,11 @@ namespace RequestManager.Models.Config
             get { return managers; }
             set => Set(ref managers, value);
         }
-        public List<string> Executors { get; set; }
+        public List<string> Executors
+        {
+            get { return executors; }
+            set => Set(ref executors, value);
+        }
         public Fonts Fonts { get; set; }
 
         public Configuration()
