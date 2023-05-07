@@ -154,17 +154,34 @@ namespace RequestManager.ViewModels
         private bool CanShowAnotherPageExecuted(object p) => true;
 
         #endregion
-        #region Удаление менеджера
+        #region Удаление менеджера/исполнителя
         public ICommand DeleteItemCommand { get; }
-        private void OnDeleteItemCommandExecuted(object p)
+        private void OnDeleteItemCommandExecuted(object parameter)
         {
-            ConfigObject.Managers = ConfigObject.Managers.Where(m => m != SelectedManager).ToList();
-            ConfigManager.SerializeConfig(ConfigObject);
+            switch (parameter)
+            {
+                case "manager":
+                    if (SelectedManager != null)
+                    {
+                        ConfigObject.Managers = ConfigObject.Managers.Where(m => m != SelectedManager).ToList();
+                        ConfigManager.SerializeConfig(ConfigObject);
+                    }
+                    break;
+                case "executor":
+                    if (SelectedExecutor != null)
+                    {
+                        ConfigObject.Executors = ConfigObject.Executors.Where(m => m != SelectedExecutor).ToList();
+                        ConfigManager.SerializeConfig(ConfigObject);
+                    }
+                    break;
+            }
+            
+            
         }
         private bool CanDeleteItemCommandExecuted(object p) => true;
 
         #endregion
-        #region Добавление менеджера
+        #region Добавление менеджера/исполнителя
         public ICommand AddItemCommand { get; }
         private void OnAddItemCommandExecuted(object parameter)
         {
