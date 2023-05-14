@@ -59,6 +59,9 @@
                     <cmd:CloseAppCommand/>
                 </Button.Command>
             </Button>
+            <CheckBox x:Name="ExecutorColumnCheckBox" 
+                      Content="Исполнитель" Margin="5" FontSize="14" VerticalAlignment="Center" 
+                      IsChecked="{Binding Path = ExecutorChecked, Mode=TwoWay}"></CheckBox>
         </StackPanel>
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1">
@@ -69,7 +72,7 @@
                     <DataGridTextColumn Header="Дата обновления"/>
                     <DataGridTextColumn Header="Отправитель"/>
                     <DataGridTextColumn Header="Менеджер"/>
-                    <DataGridTextColumn Header="Исполнитель"/>
+                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding Path = ExecutorColumnVisibility, Mode=TwoWay}"/>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>

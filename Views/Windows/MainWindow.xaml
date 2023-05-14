@@ -19,7 +19,7 @@
             <TabItem FontSize="14" >
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <faSh:IconBlock Icon="Angry" Margin="0,0,2,0" Height="14"/>
+                        <faSh:IconBlock Icon="ArrowAltCircleDown" Margin="0,0,2,0" Height="14"/>
                         <TextBlock Text="Запросы" Cursor="Hand"/>
                     </StackPanel>
                 </TabItem.Header>
