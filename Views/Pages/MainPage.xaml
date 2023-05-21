@@ -72,7 +72,9 @@
                     <DataGridTextColumn Header="Дата обновления"/>
                     <DataGridTextColumn Header="Отправитель"/>
                     <DataGridTextColumn Header="Менеджер"/>
-                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding Path = ExecutorColumnVisibility, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding ElementName=ExecutorColumnCheckBox, Path=IsChecked}">
+                    </DataGridTextColumn>
+                    
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
