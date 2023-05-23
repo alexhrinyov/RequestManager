@@ -127,15 +127,10 @@ namespace RequestManager.ViewModels
             set => Set(ref newExecutor, value);
         }
         private Visibility executorColumnVisibility;
+        
         /// <summary>
-        /// Видимость колонки с исполнителями в главном окне
+        /// Отмеченность чекбокса исполнитель
         /// </summary>
-        public Visibility ExecutorColumnVisibility
-        {
-            get => executorColumnVisibility;
-            set => Set(ref executorColumnVisibility, value);
-        }
-
         private bool executorChecked = true;
         /// <summary>
         /// CheckBox visibility state for Executor column
@@ -145,7 +140,7 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref executorChecked, value);
-                ChangeExecutorVisibilityCommand.Execute(null);
+                
             }
         }
 
@@ -232,18 +227,7 @@ namespace RequestManager.ViewModels
         private bool CanAddItemCommandExecuted(object p) => true;
 
         #endregion
-        #region Скрытие колонки исполнителя
-        public ICommand ChangeExecutorVisibilityCommand { get; }
-        private void OnChangeExecutorVisibilityCommandExecuted(object p)
-        {
-            if(ExecutorColumnVisibility == Visibility.Hidden)
-                ExecutorColumnVisibility = Visibility.Visible;
-            else
-                ExecutorColumnVisibility = Visibility.Hidden;
-        }
-        private bool CanChangeExecutorVisibilityExecuted(object p) => true;
-
-        #endregion
+       
 
 
         #endregion
@@ -256,7 +240,7 @@ namespace RequestManager.ViewModels
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
             DeleteItemCommand = new LambdaCommand(OnDeleteItemCommandExecuted, CanDeleteItemCommandExecuted);
             AddItemCommand = new LambdaCommand(OnAddItemCommandExecuted, CanAddItemCommandExecuted);
-            ChangeExecutorVisibilityCommand = new LambdaCommand(OnChangeExecutorVisibilityCommandExecuted, CanDeleteItemCommandExecuted);
+           
             //Начальная страница и её контекст данных
             CurrentPage = new MainPage();
             CurrentPage.DataContext = this;

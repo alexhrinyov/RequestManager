@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
       xmlns:vm="clr-namespace:RequestManager.ViewModels"
-      xmlns:cfg="clr-namespace:RequestManager.Models.Config"
- 
+      xmlns:cfg="clr-namespace:RequestManager.Models.Config" xmlns:vm1="clr-namespace:RequestManager"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -25,6 +24,7 @@
         <Style TargetType="DataGrid">
             <Setter Property="ColumnWidth" Value="*"/>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Page.Resources>
 
 
@@ -66,13 +66,16 @@
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1">
             <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" >
+                <DataGrid.Resources>
+                    <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" ></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата создания"/>
                     <DataGridTextColumn Header="Дата обновления"/>
                     <DataGridTextColumn Header="Отправитель"/>
                     <DataGridTextColumn Header="Менеджер"/>
-                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding ElementName=ExecutorColumnCheckBox, Path=IsChecked}">
+                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource ColumnCheckedProxy}}">
                     </DataGridTextColumn>
                     
                 </DataGrid.Columns>

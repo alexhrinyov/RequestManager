@@ -23,7 +23,7 @@
                         <TextBlock Text="Запросы" Cursor="Hand"/>
                     </StackPanel>
                 </TabItem.Header>
-                <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Hidden" />
+                <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Visible" />
             </TabItem>
             <TabItem  FontSize="14">
                 <TabItem.Header>
