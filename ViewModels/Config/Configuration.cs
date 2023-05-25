@@ -13,10 +13,17 @@ namespace RequestManager.Models.Config
 {
     internal class Configuration:ViewModel
     {
-        
+
+        private string server;
         private List<string> managers;
         private List<string> executors;
         private Fonts fonts;
+        
+        public string Server
+        {
+            get { return server; }
+            set => Set(ref server, value);
+        }
         public List<string> Managers { 
             get { return managers; }
             set => Set(ref managers, value);
@@ -26,6 +33,7 @@ namespace RequestManager.Models.Config
             get { return executors; }
             set => Set(ref executors, value);
         }
+        
         public Fonts Fonts { get; set; }
 
         public Configuration()

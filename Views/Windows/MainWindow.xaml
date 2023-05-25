@@ -55,6 +55,13 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Label>Сервер SQL:</Label>
+                            <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя сервера" Text="{Binding ConfigObject.Server, Mode=TwoWay}"></TextBox>
+                            <Button Command="{Binding Path=SaveServerCommand}">Сохранить</Button>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
                 
 

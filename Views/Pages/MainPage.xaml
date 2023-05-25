@@ -65,17 +65,17 @@
         </StackPanel>
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1">
-            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" >
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests}">
                 <DataGrid.Resources>
                     <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Дата создания"/>
-                    <DataGridTextColumn Header="Дата обновления"/>
-                    <DataGridTextColumn Header="Отправитель"/>
-                    <DataGridTextColumn Header="Менеджер"/>
-                    <DataGridTextColumn Header="Исполнитель" Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource ColumnCheckedProxy}}">
+                    <DataGridTextColumn Header="Id" Binding="{Binding Path=Id,  StringFormat=#{0}}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=CreationDate}"/>
+                    <DataGridTextColumn Header="Дата обновления" Binding="{Binding Path=UpdateDate}"/>
+                    <DataGridTextColumn Header="Отправитель" Binding="{Binding Path=Sender}"/>
+                    <DataGridTextColumn Header="Менеджер" Binding="{Binding Path=Manager}"/>
+                    <DataGridTextColumn Header="Исполнитель" Binding="{Binding Path=Executor}" Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource ColumnCheckedProxy}}">
                     </DataGridTextColumn>
                     
                 </DataGrid.Columns>

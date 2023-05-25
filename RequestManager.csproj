@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RequestMaster.Data\RequestManager.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="jsconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

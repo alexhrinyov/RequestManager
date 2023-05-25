@@ -1,10 +1,13 @@
-﻿using RequestManager.Infrastructure.Commands;
+﻿using RequestManager.Data.Entities;
+using RequestManager.Data.Repositories;
+using RequestManager.Infrastructure.Commands;
 using RequestManager.Models.Config;
 using RequestManager.ViewModels.Base;
 using RequestManager.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,39 +15,36 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace RequestManager.ViewModels
 {
-    internal class RequestViewModel: ViewModel
+    internal class RequestViewModel : ViewModel
     {
+        private RequestRepository requestRepository;
+        private IEnumerable<Request> requestList;
+        /// <summary>
+        /// Коллекция запросов
+        /// </summary>
+        public IEnumerable<Request> Requests
+        {
+            get { return requestList; }
+            set => Set(ref requestList, value);
+        }
+
         #region Свойства
-        //private int id;
-        //private string date;
-        //private string sender;
-        //public int Id { get { return id; } }
-        //public string Date 
-        //{
-        //    get { return date; }
-        //    set => Set(ref date, value);
 
-        //}
-        //public string Sender
-        //{
-        //    get { return sender; }
-        //    set => Set(ref sender, value);
-
-        //}
-        public List<int> Years { get;} = new List<int>() { DateTime.Now.Year, DateTime.Now.Year-1, DateTime.Now.Year-2 };
-        public List<Months> MonthsList { get; } = new List<Months> 
-        { Months.Январь, 
-            Months.Февраль, 
-            Months.Март, 
-            Months.Апрель, 
+        public List<int> Years { get; } = new List<int>() { DateTime.Now.Year, DateTime.Now.Year - 1, DateTime.Now.Year - 2 };
+        public List<Months> MonthsList { get; } = new List<Months>
+        { Months.Январь,
+            Months.Февраль,
+            Months.Март,
+            Months.Апрель,
             Months.Май,
-            Months.Июнь, 
-            Months.Июль, 
-            Months.Август, 
-            Months.Сентябрь, 
+            Months.Июнь,
+            Months.Июль,
+            Months.Август,
+            Months.Сентябрь,
             Months.Октябрь,
             Months.Ноябрь,
             Months.Декабрь
@@ -81,32 +81,12 @@ namespace RequestManager.ViewModels
         public Page MainPage { get; set; }
 
 
-        
+        #region Работа с конфигурацией
         /// <summary>
         /// Объект конфигурации из json
         /// </summary>
-        public Configuration ConfigObject{get; set; }
+        public Configuration ConfigObject { get; set; }
 
-        
-
-        private string selectedManager;
-        /// <summary>
-        /// Выбранный в Listbox менеджер
-        /// </summary>
-        public string SelectedManager
-        {
-            get { return selectedManager; }
-            set => Set(ref selectedManager, value);
-        }
-        private string selectedExecutor;
-        /// <summary>
-        /// Выбранный в Listbox исполнитель
-        /// </summary>
-        public string SelectedExecutor
-        {
-            get { return selectedExecutor; }
-            set => Set(ref selectedExecutor, value);
-        }
         private string? newManager;
         /// <summary>
         /// Новый менеджер
@@ -126,8 +106,29 @@ namespace RequestManager.ViewModels
             get => newExecutor;
             set => Set(ref newExecutor, value);
         }
-        private Visibility executorColumnVisibility;
+        #endregion
+
+        private string selectedManager;
+        /// <summary>
+        /// Выбранный в Listbox менеджер
+        /// </summary>
+        public string SelectedManager
+        {
+            get { return selectedManager; }
+            set => Set(ref selectedManager, value);
+        }
+        private string selectedExecutor;
+        /// <summary>
+        /// Выбранный в Listbox исполнитель
+        /// </summary>
+        public string SelectedExecutor
+        {
+            get { return selectedExecutor; }
+            set => Set(ref selectedExecutor, value);
+        }
         
+        private Visibility executorColumnVisibility;
+
         /// <summary>
         /// Отмеченность чекбокса исполнитель
         /// </summary>
@@ -135,15 +136,35 @@ namespace RequestManager.ViewModels
         /// <summary>
         /// CheckBox visibility state for Executor column
         /// </summary>
-        public bool ExecutorChecked 
-        {   get => executorChecked;
+        public bool ExecutorChecked
+        { get => executorChecked;
             set
             {
                 Set(ref executorChecked, value);
-                
+
             }
         }
+        #region Свойства RequestMaster
+        private string senderNew;
+        public string SenderNew
+        {
+            get => senderNew;
+            set => Set(ref senderNew, value);
+        }
+        private string managerNew;
+        public string ManagerNew
+        {
+            get => managerNew;
+            set => Set(ref managerNew, value);
+        }
+        private string executorNew;
+        public string ExecutorNew
+        {
+            get => executorNew;
+            set => Set(ref executorNew, value);
+        }
 
+        #endregion
 
         #endregion
 
@@ -227,7 +248,44 @@ namespace RequestManager.ViewModels
         private bool CanAddItemCommandExecuted(object p) => true;
 
         #endregion
-       
+        #region Изменение сервера
+        public ICommand SaveServer { get; }
+        private void OnSaveServerCommandExecuted(object parameter)
+        {
+            if (ConfigObject.Server != null)
+            {
+                ConfigManager.SerializeConfig(ConfigObject);
+            }
+
+        }
+        private bool CanSaveServerExecuted(object p) => true;
+
+        #endregion
+        #region Добавить запрос
+
+        public ICommand CreateRequest { get; }
+        private void OnAddRequestCommandExecuted(object parameter)
+        {
+            var year = DateTime.Now.Year.ToString();
+            var month = MonthsList[DateTime.Now.Month].ToString();
+            var dt = DateTime.Now.ToString();
+            string fp = Path.Combine("D:\\Работа\\Запросы", year, month, ManagerNew, dt);
+            var request = new Request()
+            {
+                CreationDate = DateTime.Now,
+                Executor = ExecutorNew,
+                Sender = SenderNew,
+                Manager = ManagerNew,
+                UpdateDate = DateTime.Now,
+                FolderPath = fp
+            };
+            requestRepository.Add(request);
+            CurrentPage = MainPage;
+            Requests = requestRepository.SelectAll();
+            
+        }
+        private bool CanAddRequestCommandExecuted(object p) => true;
+        #endregion
 
 
         #endregion
@@ -240,13 +298,21 @@ namespace RequestManager.ViewModels
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);
             DeleteItemCommand = new LambdaCommand(OnDeleteItemCommandExecuted, CanDeleteItemCommandExecuted);
             AddItemCommand = new LambdaCommand(OnAddItemCommandExecuted, CanAddItemCommandExecuted);
-           
+            CreateRequest = new LambdaCommand(OnAddRequestCommandExecuted, CanAddRequestCommandExecuted);
+            SaveServer = new LambdaCommand(OnSaveServerCommandExecuted, CanSaveServerExecuted);
+
             //Начальная страница и её контекст данных
-            CurrentPage = new MainPage();
+            MainPage = new MainPage();
+            CurrentPage = MainPage;
             CurrentPage.DataContext = this;
             ConfigObject = ConfigManager.DeserializeConfig();
-            
+
+            //Загрузка запросов из БД при старте
+            requestRepository = new RequestRepository( new Data.RequestManagerContext());
+            Requests = requestRepository.SelectAll();
 
         }
+        // Методы
+
     }
 }

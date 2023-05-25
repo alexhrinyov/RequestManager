@@ -18,11 +18,12 @@
         <StackPanel Orientation="Vertical" Grid.Row="0">
             <Label>Вас приветствует мастер расчётов. Вводите данные шаг за шагом.</Label>
             <Label>Отправитель(организация, ключевые слова):</Label>
-            <TextBox Width="200" HorizontalAlignment="Left"></TextBox>
+            <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding SenderNew, Mode=TwoWay}"></TextBox>
             <Label>Менеджер</Label>
-            <ComboBox Width="200" HorizontalAlignment="Left"></ComboBox>
+            <ComboBox Width="200" HorizontalAlignment="Left" ItemsSource="{Binding Path=ConfigObject.Managers}" SelectedItem="{Binding Path= ManagerNew, Mode=TwoWay}"></ComboBox>
             <Label>Исполнитель</Label>
-            <ComboBox Width="200" HorizontalAlignment="Left"></ComboBox>
+            <ComboBox Width="200" HorizontalAlignment="Left" ItemsSource="{Binding Path=ConfigObject.Executors}" SelectedItem="{Binding Path= ExecutorNew, Mode=TwoWay}"></ComboBox>
+            <Button Width="100" HorizontalAlignment="Left" Command="{Binding Path= CreateRequest}">Создать</Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Row="1">
             <Button  Width="100"  >Обновить</Button>
