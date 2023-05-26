@@ -8,7 +8,7 @@
         xmlns:faSh="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="Менеджер запросов" Height="450" Width="800">
+        Title="Менеджер запросов" Height="450" Width="900">
     <Window.DataContext>
         <vm:RequestViewModel></vm:RequestViewModel>
     </Window.DataContext>
@@ -32,7 +32,7 @@
                         <TextBlock Text="Установки" Cursor="Hand"/>
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel Orientation="Horizontal" >
+                <DockPanel  Height="220" VerticalAlignment="Top"  >
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="1">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <Label>Менеджеры:</Label>
@@ -58,11 +58,11 @@
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="1">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <Label>Сервер SQL:</Label>
-                            <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="144" ToolTip="Введите имя сервера" Text="{Binding ConfigObject.Server, Mode=TwoWay}"></TextBox>
-                            <Button Command="{Binding Path=SaveServerCommand}">Сохранить</Button>
+                            <TextBox HorizontalAlignment="Left"  Foreground="SlateGray" Width="200" ToolTip="Введите имя сервера" Text="{Binding ConfigObject.Server, Mode=TwoWay}"></TextBox>
+                            <Button Command="{Binding Path=SaveServerCommand}" Width="120" HorizontalAlignment="Left" Cursor="Hand">Сохранить</Button>
                         </StackPanel>
                     </Border>
-                </StackPanel>
+                </DockPanel>
                 
 
 

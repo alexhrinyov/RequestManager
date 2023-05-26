@@ -128,7 +128,14 @@ namespace RequestManager.ViewModels
             get { return selectedExecutor; }
             set => Set(ref selectedExecutor, value);
         }
-        
+
+        private Request selectedRequest;
+        public Request SelectedRequest
+        {
+            get { return selectedRequest; }
+            set => Set(ref selectedRequest, value);
+        }
+
         private Visibility executorColumnVisibility;
 
         /// <summary>
@@ -251,14 +258,14 @@ namespace RequestManager.ViewModels
 
         #endregion
         #region Изменение сервера
-        public ICommand SaveServer { get; }
+        public ICommand SaveServerCommand { get; }
         private void OnSaveServerCommandExecuted(object parameter)
         {
             if (ConfigObject.Server != null)
             {
                 ConfigManager.SerializeConfig(ConfigObject);
             }
-
+            MessageBox.Show("SQL connection string changed!");
         }
         private bool CanSaveServerExecuted(object p) => true;
 
@@ -271,24 +278,51 @@ namespace RequestManager.ViewModels
             var year = DateTime.Now.Year.ToString();
             var month = MonthsList[DateTime.Now.Month].ToString();
             var dt = DateTime.Now.ToString();
-            string fp = Path.Combine("D:\\Работа\\Запросы", year, month, ManagerNew, dt);
-            var request = new Request()
+            Request request = null;
+            try
             {
-                CreationDate = DateTime.Now,
-                Executor = ExecutorNew,
-                Sender = SenderNew,
-                Manager = ManagerNew,
-                UpdateDate = DateTime.Now,
-                FolderPath = fp
-            };
-            await requestRepository.Add(request);
-            CurrentPage = MainPage;
-            Requests = requestRepository.SelectAll();
-            
+                request = new Request()
+                {
+                    CreationDate = DateTime.Now,
+                    Executor = ExecutorNew,
+                    Sender = SenderNew,
+                    Manager = ManagerNew,
+                    UpdateDate = DateTime.Now,
+                    FolderPath = Path.Combine("D:\\Работа\\Запросы", year, month, ManagerNew, dt)
+                };
+                await requestRepository.Add(request);
+                CurrentPage = MainPage;
+                Requests = requestRepository.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Отсутствуют данные", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         private bool CanAddRequestCommandExecuted(object p) => true;
         #endregion
+        #region Удалить запрос
 
+        public ICommand DeleteRequestCommand { get; }
+        
+
+        private async void OnDeleteRequestCommandExecuted(object parameter)
+        {
+
+            Request request = SelectedRequest;
+            try
+            {
+               
+                await requestRepository.Delete(request);
+                Requests = requestRepository.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private bool CanDeleteRequestCommandExecuted(object p) => true;
+        #endregion
 
         #endregion
 
@@ -301,8 +335,8 @@ namespace RequestManager.ViewModels
             DeleteItemCommand = new LambdaCommand(OnDeleteItemCommandExecuted, CanDeleteItemCommandExecuted);
             AddItemCommand = new LambdaCommand(OnAddItemCommandExecuted, CanAddItemCommandExecuted);
             CreateRequest = new LambdaCommand(OnAddRequestCommandExecuted, CanAddRequestCommandExecuted);
-            SaveServer = new LambdaCommand(OnSaveServerCommandExecuted, CanSaveServerExecuted);
-
+            SaveServerCommand = new LambdaCommand(OnSaveServerCommandExecuted, CanSaveServerExecuted);
+            DeleteRequestCommand = new LambdaCommand(OnDeleteRequestCommandExecuted, CanDeleteRequestCommandExecuted);
             //Начальная страница и её контекст данных
             MainPage = new MainPage();
             CurrentPage = MainPage;

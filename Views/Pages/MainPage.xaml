@@ -47,7 +47,7 @@
                 <ComboBox x:Name="MonthsBox"  VerticalAlignment="Top" ItemsSource="{Binding Path=MonthsList}" ></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <Label >Отправитель:</Label>
+                <Label >Менеджер:</Label>
                 <ComboBox  VerticalAlignment="Top" ItemsSource="{Binding Path=ConfigObject.Managers}">
                     
                 </ComboBox>
@@ -65,7 +65,7 @@
         </StackPanel>
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1">
-            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests}">
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests}" SelectedItem="{Binding Path=SelectedRequest}">
                 <DataGrid.Resources>
                     <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
                 </DataGrid.Resources>
@@ -83,9 +83,10 @@
                     <ContextMenu>
                         <MenuItem Header="Новый расчёт" Command="{Binding Path=ShowAnotherPageCommand}"></MenuItem>
                         <MenuItem Header="Перейти"></MenuItem>
+                        <MenuItem Header="Открыть папку"></MenuItem>
                         <MenuItem Header="Копировать"></MenuItem>
                         <MenuItem Header="Вставить"></MenuItem>
-                        <MenuItem Header="Удалить"></MenuItem>
+                        <MenuItem Header="Удалить" Command="{Binding Path=DeleteRequestCommand}"></MenuItem>
                     </ContextMenu>
 
 
