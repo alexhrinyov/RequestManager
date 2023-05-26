@@ -1,4 +1,5 @@
-﻿using RequestManager.Data.Entities;
+﻿using Azure.Core;
+using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
 using RequestManager.Infrastructure.Commands;
 using RequestManager.Models.Config;
@@ -16,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Request = RequestManager.Data.Entities.Request;
 
 namespace RequestManager.ViewModels
 {
@@ -264,7 +266,7 @@ namespace RequestManager.ViewModels
         #region Добавить запрос
 
         public ICommand CreateRequest { get; }
-        private void OnAddRequestCommandExecuted(object parameter)
+        private async void OnAddRequestCommandExecuted(object parameter)
         {
             var year = DateTime.Now.Year.ToString();
             var month = MonthsList[DateTime.Now.Month].ToString();
@@ -279,7 +281,7 @@ namespace RequestManager.ViewModels
                 UpdateDate = DateTime.Now,
                 FolderPath = fp
             };
-            requestRepository.Add(request);
+            await requestRepository.Add(request);
             CurrentPage = MainPage;
             Requests = requestRepository.SelectAll();
             
@@ -308,11 +310,13 @@ namespace RequestManager.ViewModels
             ConfigObject = ConfigManager.DeserializeConfig();
 
             //Загрузка запросов из БД при старте
-            requestRepository = new RequestRepository( new Data.RequestManagerContext());
+            requestRepository = new RequestRepository(new Data.RequestManagerContext());
+            
             Requests = requestRepository.SelectAll();
 
         }
         // Методы
+       
 
     }
 }

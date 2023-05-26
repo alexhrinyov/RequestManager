@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RequestMaster.Data\RequestManager.Data.csproj" />
+    <ProjectReference Include="..\RequestManager.Data\RequestManager.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
