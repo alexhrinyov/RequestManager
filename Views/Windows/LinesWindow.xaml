@@ -1,0 +1,132 @@
+﻿<Window x:Class="RequestManager.Views.Windows.LinesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RequestManager.Views.Windows"
+        mc:Ignorable="d"
+        Title="Линии" Height="700" Width="1100">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Id запроса:"/>
+            <Label/>
+            <Label Content="Отправитель:"/>
+            <Label/>
+            <Label Content="Дата создания:"/>
+            <Label/>
+
+        </StackPanel>
+
+        <ScrollViewer x:Name="AllLines" Grid.Row="1">
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+               
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Источник"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Потребитель"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Конфигурация"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="I ном, А "  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Материал"  ></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Открыть папку" ></MenuItem>
+                        <MenuItem Header="Копировать"></MenuItem>
+                        <MenuItem Header="Вставить"></MenuItem>
+                        <MenuItem Header="Удалить"></MenuItem>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </ScrollViewer>
+        <StackPanel x:Name="SelectedLineProperties" Grid.Row="2">
+            <Label Content="Свойства выбранной линии:"/>
+            <ScrollViewer Height="200" >
+                <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Длина, м"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Углов, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тщ, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Ттр, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Т-углов, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Пож.барьеров, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Заглушек, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Компенсаторов, шт "  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Каб. ввод конц., шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Каб. ввод, центр., шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Кронштейнов, шт"  ></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Открыть папку" ></MenuItem>
+                            <MenuItem Header="Копировать"></MenuItem>
+                            <MenuItem Header="Вставить"></MenuItem>
+                            <MenuItem Header="Удалить"></MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </ScrollViewer>
+        </StackPanel>
+        <DockPanel x:Name="AdditionalProperties" Grid.Row="3" >
+            <StackPanel >
+                <Label Content="Коробки отбора мощности на выбранной линии:"/>
+                <ScrollViewer>
+                    <DataGrid Height="150" Width="400" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id свойств"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Ном.ток, A"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="I авт.выкл., A"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во, шт"  ></DataGridTextColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Копировать"></MenuItem>
+                                <MenuItem Header="Вставить"></MenuItem>
+                                <MenuItem Header="Удалить"></MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </ScrollViewer>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Блоки редукции на участке:"/>
+                <ScrollViewer>
+                    <DataGrid Height="150" Width="300" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id свойств"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="I1, A"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="I2, A"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во, шт"  ></DataGridTextColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Копировать"></MenuItem>
+                                <MenuItem Header="Вставить"></MenuItem>
+                                <MenuItem Header="Удалить"></MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </ScrollViewer>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <WrapPanel Width="175" Height="50">
+                    <Button >Отправить</Button>
+                    <Button >Закрыть</Button>
+                </WrapPanel>
+            </StackPanel>
+            
+            
+        </DockPanel>
+        
+    </Grid>
+</Window>
