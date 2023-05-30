@@ -23,6 +23,10 @@ namespace RequestManager.ViewModels
 {
     internal class RequestViewModel : ViewModel
     {
+        
+
+        #region Свойства
+        #region Подгружаемые списки и значения
         private RequestRepository requestRepository;
         private IEnumerable<Request> requestList;
         /// <summary>
@@ -33,8 +37,6 @@ namespace RequestManager.ViewModels
             get { return requestList; }
             set => Set(ref requestList, value);
         }
-
-        #region Свойства
 
         public List<int> Years { get; } = new List<int>() { DateTime.Now.Year, DateTime.Now.Year - 1, DateTime.Now.Year - 2 };
         public List<Months> MonthsList { get; } = new List<Months>
@@ -66,8 +68,12 @@ namespace RequestManager.ViewModels
             Ноябрь,
             Декабрь
         }
+        #endregion
+
+        #region Работа со страницами
 
         private Page currentPage;
+
         /// <summary>
         /// Текущая страница
         /// </summary>
@@ -81,7 +87,7 @@ namespace RequestManager.ViewModels
         /// </summary>
         public Page RequestMasterPage { get; set; }
         public Page MainPage { get; set; }
-
+        #endregion
 
         #region Работа с конфигурацией
         /// <summary>
@@ -110,6 +116,8 @@ namespace RequestManager.ViewModels
         }
         #endregion
 
+        #region Selected свойства
+
         private string selectedManager;
         /// <summary>
         /// Выбранный в Listbox менеджер
@@ -135,7 +143,9 @@ namespace RequestManager.ViewModels
             get { return selectedRequest; }
             set => Set(ref selectedRequest, value);
         }
+        #endregion
 
+        #region Видимость колонки
         private Visibility executorColumnVisibility;
 
         /// <summary>
@@ -146,13 +156,16 @@ namespace RequestManager.ViewModels
         /// CheckBox visibility state for Executor column
         /// </summary>
         public bool ExecutorChecked
-        { get => executorChecked;
+        {
+            get => executorChecked;
             set
             {
                 Set(ref executorChecked, value);
 
             }
         }
+        #endregion
+
         #region Свойства RequestMaster
         private string senderNew;
         public string SenderNew
@@ -187,6 +200,7 @@ namespace RequestManager.ViewModels
         private bool CanShowMessageCommandExecuted(object p) => true;
 
         #endregion
+
         #region Создание нового расчёта
         /// <summary>
         /// Переход на следующую страницу создания запроса
@@ -202,6 +216,7 @@ namespace RequestManager.ViewModels
         private bool CanShowAnotherPageExecuted(object p) => true;
 
         #endregion
+
         #region Удаление менеджера/исполнителя
         public ICommand DeleteItemCommand { get; }
         private void OnDeleteItemCommandExecuted(object parameter)
@@ -229,6 +244,7 @@ namespace RequestManager.ViewModels
         private bool CanDeleteItemCommandExecuted(object p) => true;
 
         #endregion
+
         #region Добавление менеджера/исполнителя
         public ICommand AddItemCommand { get; }
         private void OnAddItemCommandExecuted(object parameter)
@@ -257,6 +273,7 @@ namespace RequestManager.ViewModels
         private bool CanAddItemCommandExecuted(object p) => true;
 
         #endregion
+
         #region Изменение сервера
         public ICommand SaveServerCommand { get; }
         private void OnSaveServerCommandExecuted(object parameter)
@@ -270,6 +287,7 @@ namespace RequestManager.ViewModels
         private bool CanSaveServerExecuted(object p) => true;
 
         #endregion
+
         #region Добавить запрос
 
         public ICommand CreateRequest { get; }
@@ -301,6 +319,7 @@ namespace RequestManager.ViewModels
         }
         private bool CanAddRequestCommandExecuted(object p) => true;
         #endregion
+
         #region Удалить запрос
 
         public ICommand DeleteRequestCommand { get; }
