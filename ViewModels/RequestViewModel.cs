@@ -8,6 +8,7 @@ using RequestManager.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -295,7 +296,7 @@ namespace RequestManager.ViewModels
         {
             var year = DateTime.Now.Year.ToString();
             var month = MonthsList[DateTime.Now.Month].ToString();
-            var dt = DateTime.Now.ToString();
+            var dt = DateTime.Now.Date.Day.ToString() + " " + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString();
             Request request = null;
             try
             {
@@ -306,11 +307,16 @@ namespace RequestManager.ViewModels
                     Sender = SenderNew,
                     Manager = ManagerNew,
                     UpdateDate = DateTime.Now,
-                    FolderPath = Path.Combine("D:\\Работа\\Запросы", year, month, ManagerNew, dt)
+                    FolderPath = Path.Combine("D:\\Работа\\Запросы test", year, month, dt + " " + ManagerNew + " " + SenderNew)
                 };
                 await requestRepository.Add(request);
                 CurrentPage = MainPage;
                 Requests = requestRepository.SelectAll();
+
+                if (!Directory.Exists(request.FolderPath))
+                {
+                    Directory.CreateDirectory(request.FolderPath);
+                }
             }
             catch (Exception ex)
             {
@@ -343,6 +349,25 @@ namespace RequestManager.ViewModels
         private bool CanDeleteRequestCommandExecuted(object p) => true;
         #endregion
 
+        #region Открыть директорию запроса
+        public ICommand OpenDirectoryCommand { get; }
+
+        private void OnOpenDirectoryCommand(object parameter)
+        {
+            var dir = ((Request)parameter).FolderPath;
+            if (Directory.Exists(dir))
+            {
+                Process.Start("explorer", dir);
+            }
+            else
+            {
+                MessageBox.Show("Папка не существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+        private bool CanOpenDirectoryCommandExecuted(object p) => true;
+
+        #endregion
+
         #endregion
 
         public RequestViewModel()
@@ -356,6 +381,8 @@ namespace RequestManager.ViewModels
             CreateRequest = new LambdaCommand(OnAddRequestCommandExecuted, CanAddRequestCommandExecuted);
             SaveServerCommand = new LambdaCommand(OnSaveServerCommandExecuted, CanSaveServerExecuted);
             DeleteRequestCommand = new LambdaCommand(OnDeleteRequestCommandExecuted, CanDeleteRequestCommandExecuted);
+            OpenDirectoryCommand = new LambdaCommand(OnOpenDirectoryCommand, CanOpenDirectoryCommandExecuted);
+
             //Начальная страница и её контекст данных
             MainPage = new MainPage();
             CurrentPage = MainPage;

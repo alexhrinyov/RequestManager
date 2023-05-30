@@ -83,7 +83,7 @@
                     <ContextMenu>
                         <MenuItem Header="Новый расчёт" Command="{Binding Path=ShowAnotherPageCommand}"></MenuItem>
                         <MenuItem Header="Перейти"></MenuItem>
-                        <MenuItem Header="Открыть папку"></MenuItem>
+                        <MenuItem Header="Открыть папку" Command="{Binding Path=OpenDirectoryCommand}" CommandParameter="{Binding Path= SelectedRequest}"></MenuItem>
                         <MenuItem Header="Копировать"></MenuItem>
                         <MenuItem Header="Вставить"></MenuItem>
                         <MenuItem Header="Удалить" Command="{Binding Path=DeleteRequestCommand}"></MenuItem>
