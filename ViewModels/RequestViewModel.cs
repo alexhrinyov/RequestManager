@@ -5,6 +5,7 @@ using RequestManager.Infrastructure.Commands;
 using RequestManager.Models.Config;
 using RequestManager.ViewModels.Base;
 using RequestManager.Views.Pages;
+using RequestManager.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -368,6 +369,18 @@ namespace RequestManager.ViewModels
 
         #endregion
 
+        #region Перейти к запросу
+        public ICommand ShowLinesWindowCommand { get; }
+
+        private void OnShowLinesWindowCommand(object parameter)
+        {
+            LinesWindow linesWindow = new LinesWindow();
+            linesWindow.Show();
+        }
+        private bool CanShowLinesWindowCommandExecuted(object p) => true;
+
+        #endregion
+
         #endregion
 
         public RequestViewModel()
@@ -382,6 +395,9 @@ namespace RequestManager.ViewModels
             SaveServerCommand = new LambdaCommand(OnSaveServerCommandExecuted, CanSaveServerExecuted);
             DeleteRequestCommand = new LambdaCommand(OnDeleteRequestCommandExecuted, CanDeleteRequestCommandExecuted);
             OpenDirectoryCommand = new LambdaCommand(OnOpenDirectoryCommand, CanOpenDirectoryCommandExecuted);
+            ShowLinesWindowCommand = new LambdaCommand(OnShowLinesWindowCommand, CanShowLinesWindowCommandExecuted);
+
+
 
             //Начальная страница и её контекст данных
             MainPage = new MainPage();

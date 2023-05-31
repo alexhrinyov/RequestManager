@@ -64,7 +64,7 @@
                       IsChecked="{Binding Path = ExecutorChecked, Mode=TwoWay}"></CheckBox>
         </StackPanel>
         <!--Таблица с данными-->
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" >
             <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests}" SelectedItem="{Binding Path=SelectedRequest}">
                 <DataGrid.Resources>
                     <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
@@ -82,7 +82,7 @@
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Новый расчёт" Command="{Binding Path=ShowAnotherPageCommand}"></MenuItem>
-                        <MenuItem Header="Перейти"></MenuItem>
+                        <MenuItem Header="Перейти к запросу" Command="{Binding Path= ShowLinesWindowCommand}"></MenuItem>
                         <MenuItem Header="Открыть папку" Command="{Binding Path=OpenDirectoryCommand}" CommandParameter="{Binding Path= SelectedRequest}"></MenuItem>
                         <MenuItem Header="Копировать"></MenuItem>
                         <MenuItem Header="Вставить"></MenuItem>
