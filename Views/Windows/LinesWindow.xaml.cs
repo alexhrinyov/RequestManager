@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RequestManager.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,12 @@ namespace RequestManager.Views.Windows
     /// </summary>
     public partial class LinesWindow : Window
     {
-        public LinesWindow()
+        public LinesWindow(Request selectedRequest)
         {
             InitializeComponent();
+            CurrentRequestId.Content = selectedRequest.Id;
+            CurrentRequestSender.Content = selectedRequest.Sender;
+            CurrentRequestDate.Content = selectedRequest.CreationDate;
         }
     }
 }

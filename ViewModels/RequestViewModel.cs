@@ -374,7 +374,7 @@ namespace RequestManager.ViewModels
 
         private void OnShowLinesWindowCommand(object parameter)
         {
-            LinesWindow linesWindow = new LinesWindow();
+            LinesWindow linesWindow = new LinesWindow(selectedRequest);
             linesWindow.Show();
         }
         private bool CanShowLinesWindowCommandExecuted(object p) => true;

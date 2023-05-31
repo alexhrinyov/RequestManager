@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RequestManager.Views.Windows"
         mc:Ignorable="d"
-        Title="Линии" Height="700" Width="1300">
+        Title="Линии" Height="700" Width="1400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -16,11 +16,11 @@
 
         <StackPanel Orientation="Horizontal">
             <Label Content="Id запроса:"/>
-            <Label/>
+            <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestId"/>
             <Label Content="Отправитель:"/>
-            <Label/>
+            <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestSender"/>
             <Label Content="Дата создания:"/>
-            <Label/>
+            <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestDate"/>
             <Label Content="Конфигурация:"/>
             <ComboBox VerticalAlignment="Top"></ComboBox>
             <Label Content="Материал:"/>
@@ -68,15 +68,15 @@
             <ScrollViewer Height="200" >
                 <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="IP"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Длина, м"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Углов, шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Тщ, шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Ттр, шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Т-углов, шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Пож.барьеров, шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Заглушек, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="N участка" Width="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="IP" Width="50"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Длина, м" Width="85"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Углов, шт" Width="75"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тщ, шт" Width="75"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Ттр, шт"  Width="75"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Т-углов, шт"  Width="90" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Пож.барьеров, шт"  Width="135"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Заглушек, шт"  Width="100"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Компенсаторов, шт "  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Каб. ввод конц., шт"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Каб. ввод, центр., шт"  ></DataGridTextColumn>
@@ -92,7 +92,7 @@
                 </DataGrid>
             </ScrollViewer>
         </StackPanel>
-        <DockPanel x:Name="AdditionalProperties" Grid.Row="3" >
+        <DockPanel VerticalAlignment="Bottom" x:Name="AdditionalProperties" Grid.Row="3" >
             <StackPanel>
                 <Label Content="Коробки отбора мощности на участке:"/>
                 <ScrollViewer>
@@ -117,7 +117,7 @@
             <StackPanel>
                 <Label Margin="15,0,0,0" Content="Блоки редукции на участке:"/>
                 <ScrollViewer>
-                    <DataGrid Height="160" Width="300" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid Height="160" Width="350" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
