@@ -70,14 +70,14 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="N участка" Width="80"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="IP" Width="50"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Длина, м" Width="85"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Углов, шт" Width="75"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Тщ, шт" Width="75"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Ттр, шт"  Width="75"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Т-углов, шт"  Width="90" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Длина, м" Width="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Углов, шт" Width="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тщ, шт" Width="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Ттр, шт"  Width="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Т-углов, шт"  Width="100" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Пож.барьеров, шт"  Width="135"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Заглушек, шт"  Width="100"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Компенсаторов, шт "  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Компенсаторов, шт "  Width="150" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Каб. ввод конц., шт"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Каб. ввод, центр., шт"  ></DataGridTextColumn>
                         <DataGridTextColumn Header="Кронштейнов, шт"  ></DataGridTextColumn>

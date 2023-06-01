@@ -1,4 +1,5 @@
-﻿using RequestManager.ViewModels.Base;
+﻿using RequestManager.Data.Entities;
+using RequestManager.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,19 @@ namespace RequestManager.ViewModels
     {
 
 
+        #region Свойства
+        private List<Line> lines;
+        /// <summary>
+        /// Список линий в запросе
+        /// </summary>
+        public List<Line> Lines
+        {
+            get { return lines; }
+            set => Set(ref lines, value);
+        }
 
+
+        #endregion
 
 
 
