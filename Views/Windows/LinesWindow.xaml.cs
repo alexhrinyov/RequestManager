@@ -1,4 +1,5 @@
 ﻿using RequestManager.Data.Entities;
+using RequestManager.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace RequestManager.Views.Windows
     {
         public LinesWindow(Request selectedRequest)
         {
+            
             InitializeComponent();
-            CurrentRequestId.Content = selectedRequest.Id;
             CurrentRequestSender.Content = selectedRequest.Sender;
             CurrentRequestDate.Content = selectedRequest.CreationDate;
         }

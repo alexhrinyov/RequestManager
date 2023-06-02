@@ -4,8 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RequestManager.Views.Windows"
+        xmlns:vm="clr-namespace:RequestManager.ViewModels"
         mc:Ignorable="d"
         Title="Линии" Height="700" Width="1400">
+    <!--<Window.DataContext>
+        <vm:LinesViewModel></vm:LinesViewModel>
+    </Window.DataContext>-->
+    <Window.Resources>
+        
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -16,7 +23,7 @@
 
         <StackPanel Orientation="Horizontal">
             <Label Content="Id запроса:"/>
-            <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestId"/>
+            <Label Content="{Binding Path=RequestId}" Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestId"/>
             <Label Content="Отправитель:"/>
             <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestSender"/>
             <Label Content="Дата создания:"/>
@@ -33,15 +40,15 @@
         </StackPanel>
 
         <ScrollViewer x:Name="AllLines" Grid.Row="1">
-            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Название линии"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Источник"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Потребитель"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Конфигурация"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="I ном, А "  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Материал проводников"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Степень защиты (IP)"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Источник" Binding="{Binding Path=Start}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Потребитель" Binding="{Binding Path=Finish}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Конфигурация" Binding="{Binding Path=Configuration}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="I ном, А " Binding="{Binding Path=RatedCurrent}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Материал проводников" Binding="{Binding Path=ConductorsMaterial}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Степень защиты (IP)" Binding="{Binding Path=IP}"  ></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>

@@ -28,6 +28,8 @@ namespace RequestManager.ViewModels
         
 
         #region Свойства
+        public LinesViewModel _LinesViewModel { get; set; }
+
         #region Подгружаемые списки и значения
         private RequestRepository requestRepository;
         private IEnumerable<Request> requestList;
@@ -189,6 +191,7 @@ namespace RequestManager.ViewModels
         }
 
         #endregion
+
 
         #endregion
 
@@ -374,8 +377,18 @@ namespace RequestManager.ViewModels
 
         private void OnShowLinesWindowCommand(object parameter)
         {
-            LinesWindow linesWindow = new LinesWindow(selectedRequest);
-            linesWindow.Show();
+            if (SelectedRequest != null)
+            {
+
+                LinesWindow linesWindow = new LinesWindow(selectedRequest);
+                linesWindow.Show();
+                // Установка датаконтекста для окна Lines(программно)
+                _LinesViewModel = new LinesViewModel();
+                _LinesViewModel.RequestId = selectedRequest.Id;
+                linesWindow.DataContext = _LinesViewModel;
+                _LinesViewModel.Lines = requestRepository.SelectLinesById(_LinesViewModel.RequestId);
+            }
+            
         }
         private bool CanShowLinesWindowCommandExecuted(object p) => true;
 

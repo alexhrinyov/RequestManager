@@ -65,12 +65,12 @@
         </StackPanel>
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1" >
-            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests}" SelectedItem="{Binding Path=SelectedRequest}">
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedRequest}">
                 <DataGrid.Resources>
                     <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Path=Id,  StringFormat=#{0}}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Path=Id,  StringFormat=id{0}}" ></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=CreationDate}"/>
                     <DataGridTextColumn Header="Дата обновления" Binding="{Binding Path=UpdateDate}"/>
                     <DataGridTextColumn Header="Отправитель" Binding="{Binding Path=Sender}"/>
