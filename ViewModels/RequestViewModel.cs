@@ -383,10 +383,11 @@ namespace RequestManager.ViewModels
                 LinesWindow linesWindow = new LinesWindow(selectedRequest);
                 linesWindow.Show();
                 // Установка датаконтекста для окна Lines(программно)
-                _LinesViewModel = new LinesViewModel();
-                _LinesViewModel.RequestId = selectedRequest.Id;
-                linesWindow.DataContext = _LinesViewModel;
-                _LinesViewModel.Lines = requestRepository.SelectLinesById(_LinesViewModel.RequestId);
+                //_LinesViewModel = new LinesViewModel();
+                //_LinesViewModel.RequestId = selectedRequest.Id;
+                //linesWindow.DataContext = _LinesViewModel;
+                //_LinesViewModel.Lines = requestRepository.SelectLinesById(_LinesViewModel.RequestId);
+                
             }
             
         }
@@ -418,14 +419,21 @@ namespace RequestManager.ViewModels
             CurrentPage.DataContext = this;
             ConfigObject = ConfigManager.DeserializeConfig();
 
-            //Загрузка запросов из БД при старте
-            requestRepository = new RequestRepository(new Data.RequestManagerContext());
-            
-            Requests = requestRepository.SelectAll();
+
+            try
+            {
+                //Загрузка запросов из БД при старте
+                requestRepository = new RequestRepository(new Data.RequestManagerContext());
+                Requests = requestRepository.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
         // Методы
-       
+
 
     }
 }

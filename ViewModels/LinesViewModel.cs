@@ -44,7 +44,7 @@ namespace RequestManager.ViewModels
 
         public LinesViewModel()
         {
-
+            //Lines = new List<Line>();
         }
     }
 }

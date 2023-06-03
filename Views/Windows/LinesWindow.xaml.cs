@@ -1,5 +1,6 @@
 ﻿using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
+using RequestManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Line = RequestManager.Data.Entities.Line;
 
 namespace RequestManager.Views.Windows
 {
@@ -25,8 +27,15 @@ namespace RequestManager.Views.Windows
         {
             
             InitializeComponent();
+            CurrentRequestId.Content = selectedRequest.Id;
             CurrentRequestSender.Content = selectedRequest.Sender;
             CurrentRequestDate.Content = selectedRequest.CreationDate;
+            
+            var requestRepository = new RequestRepository(new Data.RequestManagerContext());
+            //((LinesViewModel)this.DataContext).Lines = new List<Line>()
+            //{ new Line() {RequestId = selectedRequest.Id , ConductorsMaterial= "Cu", Configuration ="dfsaf", Finish = "dfsf",
+            //Start = "df", IP = Data.Enums.ProtectionDegree.IP68, Id = 2, RatedCurrent = 5888, Name = "2323"}}; 
+            ((LinesViewModel)this.DataContext).Lines = new List<Line>();
         }
     }
 }

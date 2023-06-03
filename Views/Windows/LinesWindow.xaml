@@ -7,9 +7,9 @@
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
         mc:Ignorable="d"
         Title="Линии" Height="700" Width="1400">
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <vm:LinesViewModel></vm:LinesViewModel>
-    </Window.DataContext>-->
+    </Window.DataContext>
     <Window.Resources>
         
     </Window.Resources>
@@ -42,6 +42,7 @@
         <ScrollViewer x:Name="AllLines" Grid.Row="1">
             <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  >
                 <DataGrid.Columns>
+                    
                     <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Источник" Binding="{Binding Path=Start}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Потребитель" Binding="{Binding Path=Finish}"  ></DataGridTextColumn>
