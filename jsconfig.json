@@ -11,5 +11,6 @@
     "Сычёв",
     "Максимов"
   ],
-  "Server": "GRINEV\\TIMEXSQLSERVER"
+  ///"Server": "GRINEV\\TIMEXSQLSERVER"
+  "Server": "DESKTOP-BQ6LNRN\\SQLEXPRESS"
 }

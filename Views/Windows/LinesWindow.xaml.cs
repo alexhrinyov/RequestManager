@@ -32,10 +32,10 @@ namespace RequestManager.Views.Windows
             CurrentRequestDate.Content = selectedRequest.CreationDate;
             
             var requestRepository = new RequestRepository(new Data.RequestManagerContext());
-            //((LinesViewModel)this.DataContext).Lines = new List<Line>()
-            //{ new Line() {RequestId = selectedRequest.Id , ConductorsMaterial= "Cu", Configuration ="dfsaf", Finish = "dfsf",
-            //Start = "df", IP = Data.Enums.ProtectionDegree.IP68, Id = 2, RatedCurrent = 5888, Name = "2323"}}; 
-            ((LinesViewModel)this.DataContext).Lines = new List<Line>();
+            ((LinesViewModel)this.DataContext).Lines = new List<Line>()
+            { new Line() {RequestId = selectedRequest.Id , ConductorsMaterial= "Cu", Configuration ="dfsaf", Finish = "dfsf",
+            Start = "df", IP = Data.Enums.ProtectionDegree.IP68, Id = 2, RatedCurrent = 5000, Name = "2323"}};
+            //((LinesViewModel)this.DataContext).Lines = new List<Line>();
         }
     }
 }

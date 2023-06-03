@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RequestManager.Views.Windows"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
         mc:Ignorable="d"
         Title="Линии" Height="700" Width="1400">
@@ -11,7 +13,46 @@
         <vm:LinesViewModel></vm:LinesViewModel>
     </Window.DataContext>
     <Window.Resources>
-        
+        <col:ArrayList x:Key="ConductorsMaterialMarkupList">
+            <sys:String>Al</sys:String>
+            <sys:String>Cu</sys:String>
+            <sys:String>Различные</sys:String>
+        </col:ArrayList>
+        <col:ArrayList x:Key="RatedCurrentMarkupList">
+            <sys:String>Различные</sys:String>
+            <sys:Int32>160</sys:Int32>
+            <sys:Int32>200</sys:Int32>
+            <sys:Int32>250</sys:Int32>
+            <sys:Int32>320</sys:Int32>
+            <sys:Int32>400</sys:Int32>
+            <sys:Int32>500</sys:Int32>
+            <sys:Int32>630</sys:Int32>
+            <sys:Int32>800</sys:Int32>
+            <sys:Int32>1000</sys:Int32>
+            <sys:Int32>1250</sys:Int32>
+            <sys:Int32>1600</sys:Int32>
+            <sys:Int32>2000</sys:Int32>
+            <sys:Int32>2500</sys:Int32>
+            <sys:Int32>3200</sys:Int32>
+            <sys:Int32>4000</sys:Int32>
+            <sys:Int32>5000</sys:Int32>
+            <sys:Int32>6300</sys:Int32>
+        </col:ArrayList>
+        <col:ArrayList x:Key="ConfigurationMarkupList">
+            <sys:String>3P+N+PE(корпус)</sys:String>
+            <sys:String>3P+N+PE</sys:String>
+            <sys:String>3P+PE(корпус)</sys:String>
+            <sys:String>3P+N(1/2P)+PE(корпус)</sys:String>
+            <sys:String>2P+PE(корпус)</sys:String>
+            <sys:String>Различные</sys:String>
+        </col:ArrayList>
+        <col:ArrayList x:Key="IPMarkupList">
+            <sys:String>IP42</sys:String>
+            <sys:String>IP55</sys:String>
+            <sys:String>IP68</sys:String>
+            <sys:String>Различные</sys:String>
+        </col:ArrayList>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -29,13 +70,13 @@
             <Label Content="Дата создания:"/>
             <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestDate"/>
             <Label Content="Конфигурация:"/>
-            <ComboBox VerticalAlignment="Top"></ComboBox>
+            <ComboBox VerticalAlignment="Top" ItemsSource="{StaticResource ConfigurationMarkupList}"></ComboBox>
             <Label Content="Материал:"/>
-            <ComboBox VerticalAlignment="Top"></ComboBox>
+            <ComboBox VerticalAlignment="Top" ItemsSource="{StaticResource ConductorsMaterialMarkupList}"></ComboBox>
             <Label Content="Номинальный ток:"/>
-            <ComboBox VerticalAlignment="Top"></ComboBox>
+            <ComboBox VerticalAlignment="Top" ItemsSource="{StaticResource RatedCurrentMarkupList}"></ComboBox>
             <Label Content="Степень защиты:"/>
-            <ComboBox VerticalAlignment="Top"></ComboBox>
+            <ComboBox VerticalAlignment="Top" ItemsSource="{StaticResource IPMarkupList}"></ComboBox>
 
         </StackPanel>
 
@@ -46,9 +87,10 @@
                     <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Источник" Binding="{Binding Path=Start}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Потребитель" Binding="{Binding Path=Finish}"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Конфигурация" Binding="{Binding Path=Configuration}"  ></DataGridTextColumn>
-                    <DataGridTextColumn Header="I ном, А " Binding="{Binding Path=RatedCurrent}" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Материал проводников" Binding="{Binding Path=ConductorsMaterial}"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Конфигурация" Binding="{Binding Path=Configuration}" ></DataGridTextColumn>
+                    <DataGridComboBoxColumn Header="I ном, А " ItemsSource="{StaticResource RatedCurrentMarkupList}" SelectedItemBinding="{Binding Path=RatedCurrent}" ></DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Материал проводников" ItemsSource="{StaticResource ConductorsMaterialMarkupList}" SelectedItemBinding="{Binding Path=ConductorsMaterial}">
+                    </DataGridComboBoxColumn>
                     <DataGridTextColumn Header="Степень защиты (IP)" Binding="{Binding Path=IP}"  ></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
