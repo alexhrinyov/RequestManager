@@ -36,17 +36,6 @@ namespace RequestManager.ViewModels
         }
 
 
-        private object selectedRatedCurrent;
-        public object SelectedRatedCurrent
-        {
-            get => selectedRatedCurrent;
-            set
-            {
-                Set(ref selectedRatedCurrent, value);
-            }
-
-
-        }
 
 
         #endregion
