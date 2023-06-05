@@ -39,7 +39,6 @@
             <sys:Int32>5000</sys:Int32>
             <sys:Int32>6300</sys:Int32>
         </col:ArrayList>
-       
         <col:ArrayList x:Key="ConfigurationMarkupList">
             <sys:String>3P+N+PE(корпус)</sys:String>
             <sys:String>3P+N+PE</sys:String>
@@ -54,6 +53,19 @@
             <sys:String>IP68</sys:String>
             <sys:String>Различные</sys:String>
         </col:ArrayList>
+        <Style TargetType="DataGridColumnHeader" x:Key="style1">
+            <Setter Property="Background" Value="LightSlateGray"></Setter>
+            <Setter Property="Foreground" Value="LemonChiffon"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="Background" Value="#7787b8" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
     </Window.Resources>
     <Grid>
@@ -66,7 +78,7 @@
 
         <StackPanel Orientation="Horizontal">
             <Label Content="Id запроса:"/>
-            <Label Content="{Binding Path=RequestId}" Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestId"/>
+            <Label Content="{Binding Path=RequestId, Mode=TwoWay}" Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestId"/>
             <Label Content="Отправитель:"/>
             <Label Foreground="MediumVioletRed" FontWeight="Bold" x:Name="CurrentRequestSender"/>
             <Label Content="Дата создания:"/>
@@ -82,18 +94,23 @@
 
         </StackPanel>
 
-        <ScrollViewer Background="DimGray" x:Name="AllLines" Grid.Row="1">
-            <DataGrid RowBackground="DimGray" Background="DimGray" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  >
+        <ScrollViewer  x:Name="AllLines" Grid.Row="1">
+            <DataGrid  RowHeight="22" ColumnHeaderStyle="{StaticResource style1}"  
+                      RowBackground="#555a69"  Background="#272a30" Margin="5,10,5,5" 
+                      AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines,
+                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
-
                     <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  >
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Источник" Binding="{Binding Path=Start}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Потребитель" Binding="{Binding Path=Finish}"  ></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Конфигурация">
+                    <DataGridTemplateColumn Header="Конфигурация" Width="125">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox FontWeight="Medium"  ItemsSource="{StaticResource ConfigurationMarkupList}" SelectedItem="{Binding Configuration, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=ConfigCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox   Margin="0" FontWeight="Medium"  ItemsSource="{StaticResource ConfigurationMarkupList}" 
+                                           SelectedItem="{Binding Configuration, Mode=TwoWay}"  
+                                           SelectedIndex="{Binding ElementName=ConfigCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -101,30 +118,27 @@
                     <DataGridTemplateColumn Header="I ном, А " Width="110">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox FontWeight="Medium"  Width="100"  ItemsSource="{StaticResource RatedCurrentMarkupList}" SelectedItem="{Binding RatedCurrent, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=RatedCurrentCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium"  Width="90"  ItemsSource="{StaticResource RatedCurrentMarkupList}" SelectedItem="{Binding RatedCurrent, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=RatedCurrentCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Материал проводников" >
+                    <DataGridTemplateColumn Header="Материал проводников" Width="175" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox FontWeight="Medium" Width="100"  ItemsSource="{StaticResource ConductorsMaterialMarkupList}" SelectedItem="{Binding ConductorsMaterial, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=MaterialCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium" Width="155"  ItemsSource="{StaticResource ConductorsMaterialMarkupList}" SelectedItem="{Binding ConductorsMaterial, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=MaterialCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridComboBoxColumn Header="Материал проводников" ItemsSource="{StaticResource ConductorsMaterialMarkupList}" SelectedItemBinding="{Binding Path=ConductorsMaterial}">
-                    </DataGridComboBoxColumn>
-                    <DataGridTemplateColumn Header="Степень защиты (IP)" Width="110">
+                    <DataGridTemplateColumn Header="Степень защиты (IP)" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox FontWeight="Medium" Width="100"  ItemsSource="{StaticResource IPMarkupList}" SelectedItem="{Binding IP, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=IPCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium" Width="130"  ItemsSource="{StaticResource IPMarkupList}" SelectedItem="{Binding IP, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=IPCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Степень защиты (IP)" Binding="{Binding Path=IP}"  ></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
@@ -220,7 +234,7 @@
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <WrapPanel Width="250" Height="50">
-                    <Button ToolTip="Отправить в базу данных" >Отправить</Button>
+                    <Button ToolTip="Отправить в базу данных" Command="{Binding PushRequestDataCommand}" >Отправить</Button>
                     <Button ToolTip="Экспорт в другие форматы" >Экспорт</Button>
                     <Button >Закрыть</Button>
                 </WrapPanel>
