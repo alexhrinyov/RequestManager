@@ -98,7 +98,8 @@
             <DataGrid  RowHeight="22" ColumnHeaderStyle="{StaticResource style1}"  
                       RowBackground="#555a69"  Background="#272a30" Margin="5,10,5,5" 
                       AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines,
-                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Foreground="AliceBlue">
                 <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  >

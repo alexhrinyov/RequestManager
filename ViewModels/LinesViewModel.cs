@@ -57,21 +57,30 @@ namespace RequestManager.ViewModels
             }
             try
             {
-                if (requestRepository.SelectLinesById(RequestId).ToList() != Lines)
+                bool updatedOnly = true;
+                foreach (Line line in Lines)
                 {
-                    await requestRepository.AddLinesAsync(Lines);
-                    MessageBox.Show("Отправлено в базу данных", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
+                    if (line.Id == 0)
+                    {
+                        updatedOnly = false;
+                        await requestRepository.AddSingleLineAsync(line);
+                    }
+                    else
+                    {
+
+                       await requestRepository.UpdateLineAsync(line);
+                       
+                    }
+                }
+                if (updatedOnly)
+                {
+                    MessageBox.Show("Обновлено", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    foreach (var line in Lines)
-                    {
-                        if (line != null)
-                        {
-                           await  requestRepository.UpdateLineAsync(line);
-                            MessageBox.Show("Обновлено", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                    }
+                    MessageBox.Show("Изменения отправлены в базу данных", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
 
             }
