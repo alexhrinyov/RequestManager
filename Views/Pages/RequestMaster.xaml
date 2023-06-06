@@ -8,9 +8,9 @@
       xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="RequestMaster">
+      Title="RequestMaster" >
 
-    <Grid Background="White">
+    <Grid Background="#dce6df">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>

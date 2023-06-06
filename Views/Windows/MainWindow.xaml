@@ -8,14 +8,14 @@
         xmlns:faSh="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:cmd="clr-namespace:RequestManager.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="Менеджер запросов" Height="450" Width="900">
+        Title="Менеджер запросов" Height="450" Width="950" Background="#dce6df">
     <Window.DataContext>
         <vm:RequestViewModel></vm:RequestViewModel>
     </Window.DataContext>
 
 
-    <DockPanel>
-        <TabControl DockPanel.Dock="Top" Margin="1">
+    <DockPanel >
+        <TabControl Background="#dce6df" DockPanel.Dock="Top" Margin="1">
             <TabItem FontSize="14" >
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -25,14 +25,14 @@
                 </TabItem.Header>
                 <Frame x:Name="MainFrame" Content="{Binding Path = CurrentPage}" NavigationUIVisibility="Visible" />
             </TabItem>
-            <TabItem  FontSize="14">
+            <TabItem  FontSize="14" Background="#dce6df">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <faSh:IconImage Icon="Gears" Height="15" Margin="0,0,2,0"/>
                         <TextBlock Text="Установки" Cursor="Hand"/>
                     </StackPanel>
                 </TabItem.Header>
-                <DockPanel  Height="220" VerticalAlignment="Top"  >
+                <DockPanel Background="#dce6df"  Height="220" VerticalAlignment="Top"  >
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="1">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <Label>Менеджеры:</Label>

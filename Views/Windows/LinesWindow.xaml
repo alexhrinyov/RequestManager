@@ -7,8 +7,9 @@
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:RequestManager.ViewModels"
+        xmlns:vm1="clr-namespace:RequestManager"
         mc:Ignorable="d"
-        Title="Линии" Height="700" Width="1400" Background="LightGray">
+        Title="Линии" Height="700" Width="1450" Background="#dce6df">
         
     <Window.DataContext>
         <vm:LinesViewModel></vm:LinesViewModel>
@@ -53,7 +54,7 @@
             <sys:String>IP68</sys:String>
             <sys:String>Различные</sys:String>
         </col:ArrayList>
-        <Style TargetType="DataGridColumnHeader" x:Key="style1">
+        <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightSlateGray"></Setter>
             <Setter Property="Foreground" Value="LemonChiffon"/>
             <Setter Property="Height" Value="30"/>
@@ -66,6 +67,13 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="MinRowHeight" Value="22"/>
+            <Setter Property="RowBackground" Value="#555a69"/>
+            <Setter Property="Background" Value="#555a69"/>
+            <Setter Property="Foreground" Value="AliceBlue"/>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     </Window.Resources>
     <Grid>
@@ -95,22 +103,21 @@
         </StackPanel>
 
         <ScrollViewer  x:Name="AllLines" Grid.Row="1">
-            <DataGrid  RowHeight="22" ColumnHeaderStyle="{StaticResource style1}"  
-                      RowBackground="#555a69"  Background="#272a30" Margin="5,10,5,5" 
+            <DataGrid   Margin="5,10,5,5" 
                       AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines,
                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Foreground="AliceBlue">
+                       >
                 <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название линии" Binding="{Binding Path=Name}"  >
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Источник" Binding="{Binding Path=Start}"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="Потребитель" Binding="{Binding Path=Finish}"  ></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Конфигурация" Width="125">
+                    <DataGridTemplateColumn Header="Конфигурация" Width="165">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox   Margin="0" FontWeight="Medium"  ItemsSource="{StaticResource ConfigurationMarkupList}" 
-                                           SelectedItem="{Binding Configuration, Mode=TwoWay}"  
+                                <ComboBox Width="145"   Margin="0" FontWeight="Medium"  ItemsSource="{StaticResource ConfigurationMarkupList}" 
+                                           SelectedItem="{Binding Configuration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   
                                            SelectedIndex="{Binding ElementName=ConfigCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
@@ -119,15 +126,20 @@
                     <DataGridTemplateColumn Header="I ном, А " Width="110">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="0" FontWeight="Medium"  Width="90"  ItemsSource="{StaticResource RatedCurrentMarkupList}" SelectedItem="{Binding RatedCurrent, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=RatedCurrentCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium"  Width="90"  ItemsSource="{StaticResource RatedCurrentMarkupList}" 
+                                          SelectedItem="{Binding RatedCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          SelectedIndex="{Binding ElementName=RatedCurrentCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Материал проводников" Width="175" >
+                    <DataGridTemplateColumn Header="Материал" Width="145" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="0" FontWeight="Medium" Width="155"  ItemsSource="{StaticResource ConductorsMaterialMarkupList}" SelectedItem="{Binding ConductorsMaterial, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=MaterialCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium" Width="125"  
+                                          ItemsSource="{StaticResource ConductorsMaterialMarkupList}" 
+                                          SelectedItem="{Binding ConductorsMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                          SelectedIndex="{Binding ElementName=MaterialCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -135,7 +147,10 @@
                     <DataGridTemplateColumn Header="Степень защиты (IP)" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="0" FontWeight="Medium" Width="130"  ItemsSource="{StaticResource IPMarkupList}" SelectedItem="{Binding IP, Mode=TwoWay}"  SelectedIndex="{Binding ElementName=IPCombo, Path=SelectedIndex, Mode=OneWay}" >
+                                <ComboBox Margin="0" FontWeight="Medium" Width="130"  
+                                          ItemsSource="{StaticResource IPMarkupList}" 
+                                          SelectedItem="{Binding IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                          SelectedIndex="{Binding ElementName=IPCombo, Path=SelectedIndex, Mode=OneWay}" >
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -155,30 +170,70 @@
             <Label Content="Свойства выбранной линии:"/>
             <StackPanel Margin="15,0,15,0" Orientation="Horizontal">
                 <Label Content="Видны столбцы:"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т щ"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т тр"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т-углы"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Пож.барьеры"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Заглушки"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Компенсаторы"/>
-                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Кабельные коробки"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т щ" 
+                          IsChecked="{Binding Path = TerminalHeadersSwgChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т тр"
+                          IsChecked="{Binding Path = TerminalHeadersTRChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т-углы"
+                          IsChecked="{Binding Path = TChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Пож.барьеры"
+                          IsChecked="{Binding Path = FbChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Заглушки"
+                          IsChecked="{Binding Path = CapsChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Компенсаторы"
+                          IsChecked="{Binding Path = ExpChecked, Mode=TwoWay}"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Кабельные коробки"
+                          IsChecked="{Binding Path = CabelBoxesChecked, Mode=TwoWay}"/>
             </StackPanel>
             <ScrollViewer Height="200" >
-                <DataGrid Background="DimGray" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid.Resources>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = TerminalHeadersSwgChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy2" Data="{Binding Path = TerminalHeadersTRChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy3" Data="{Binding Path = TChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy4" Data="{Binding Path = FbChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy5" Data="{Binding Path = CapsChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy6" Data="{Binding Path = ExpChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy7" Data="{Binding Path = CabelBoxesChecked}"/>
+                    </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="N участка" Width="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="IP" Width="50"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Длина, м" Width="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Углов, шт" Width="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Тщ, шт" Width="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Ттр, шт"  Width="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Т-углов, шт"  Width="100" ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Пож.барьеров, шт"  Width="135"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Заглушек, шт"  Width="100"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Компенсаторов, шт "  Width="150" ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Каб. ввод конц., шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Каб. ввод, центр., шт"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Кронштейнов, шт"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="N участка" MinWidth="40"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="IP" MinWidth="30"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Длина, м" MinWidth="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Углов, шт" MinWidth="80"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тщ, шт" MinWidth="80"
+                          Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy}}">                 
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Ттр, шт"  MinWidth="50"
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy2}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Т-углов, шт"  MinWidth="70"
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy3}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Пож.барьеров, шт"  MinWidth="140"  
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy4}}"                    >
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Заглушек, шт"  MinWidth="90" 
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy5}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Компенс., шт "  MinWidth="100" 
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy7}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Каб. ввод конц., шт"  MinWidth="135" 
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy6}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Каб. ввод, центр., шт"  MinWidth="150"
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy7}}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Кронштейнов, шт" MinWidth="120"  ></DataGridTextColumn>
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
@@ -194,7 +249,7 @@
             <StackPanel>
                 <Label Content="Коробки отбора мощности на участке:"/>
                 <ScrollViewer>
-                    <DataGrid Background="DimGray" Height="160"  Width="400" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid  Height="160"  Width="400" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
@@ -215,7 +270,7 @@
             <StackPanel>
                 <Label Margin="15,0,0,0" Content="Блоки редукции на участке:"/>
                 <ScrollViewer>
-                    <DataGrid Background="DimGray" Height="160" Width="350" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid Height="160" Width="350" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
