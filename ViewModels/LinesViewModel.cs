@@ -30,6 +30,20 @@ namespace RequestManager.ViewModels
             set => Set(ref lines, value);
         }
 
+        private Line selectedLine;
+        public Line SelectedLine
+        {
+            get => selectedLine;
+            set => Set(ref selectedLine, value);
+        }
+
+        //private LineProperties lineProperties;
+        //public LineProperties LineProperties
+        //{
+        //    get => lineProperties;
+        //    set => Set(ref lineProperties, value);
+        //}
+
         private int requestId;
         public int RequestId
         {
@@ -44,8 +58,9 @@ namespace RequestManager.ViewModels
         /// Отмеченность чекбокса Тщ    
         /// </summary>
         private bool terminalHeadersSwgChecked = true;
+
         /// <summary>
-        /// Отмеченность чекбокса Тщ
+        /// 
         /// </summary>
         public bool TerminalHeadersSwgChecked
         {
@@ -200,6 +215,7 @@ namespace RequestManager.ViewModels
                     {
                         updatedOnly = false;
                         await requestRepository.AddSingleLineAsync(line);
+                       
                     }
                     else
                     {
@@ -229,7 +245,13 @@ namespace RequestManager.ViewModels
         private bool CanPushRequestDataExecuted(object p) => true;
         #endregion
 
+        //public ICommand LineSelectionChangedCommand { get; }
+        //private async void OnLineSelectionChangedCommand(object parameter)
+        //{
+            
+        //}
 
+        //private bool CanLineSelectionChangedCommandExecuted(object p) => true;
 
 
 

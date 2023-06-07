@@ -105,7 +105,8 @@
         <ScrollViewer  x:Name="AllLines" Grid.Row="1">
             <DataGrid   Margin="5,10,5,5" 
                       AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines,
-                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                        
                        >
                 <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
@@ -186,7 +187,7 @@
                           IsChecked="{Binding Path = CabelBoxesChecked, Mode=TwoWay}"/>
             </StackPanel>
             <ScrollViewer Height="200" >
-                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*">
                     <DataGrid.Resources>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = TerminalHeadersSwgChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy2" Data="{Binding Path = TerminalHeadersTRChecked}"/>
@@ -288,6 +289,14 @@
                     </DataGrid>
                 </ScrollViewer>
             </StackPanel>
+            <StackPanel>
+                <Label Margin="15,0,0,0" Content="Примечания для линии:"/>
+                <TextBox  Width="200" Height="160" FontWeight="Medium" FontStyle="Italic"
+                         TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"
+                           >
+                </TextBox>
+            </StackPanel>
+            
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <WrapPanel Width="250" Height="50">
                     <Button ToolTip="Отправить в базу данных" Command="{Binding PushRequestDataCommand}" >Отправить</Button>
