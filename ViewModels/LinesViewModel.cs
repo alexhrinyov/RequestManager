@@ -34,15 +34,19 @@ namespace RequestManager.ViewModels
         public Line SelectedLine
         {
             get => selectedLine;
-            set => Set(ref selectedLine, value);
+            set {
+                Set(ref selectedLine, value);
+                LineProperties = requestRepository.SelectPropertiesById(SelectedLine.Id).ToList();
+            } 
+
         }
 
-        //private LineProperties lineProperties;
-        //public LineProperties LineProperties
-        //{
-        //    get => lineProperties;
-        //    set => Set(ref lineProperties, value);
-        //}
+        private IEnumerable< LineProperties> lineProperties;
+        public IEnumerable<LineProperties> LineProperties
+        {
+            get => lineProperties;
+            set => Set(ref lineProperties, value);
+        }
 
         private int requestId;
         public int RequestId
@@ -194,6 +198,9 @@ namespace RequestManager.ViewModels
         #endregion
 
         #region Команды
+        /// <summary>
+        /// Обновление базы данных, загрузка всего
+        /// </summary>
         public ICommand PushRequestDataCommand { get; }
 
         private async void OnPushRequestDataCommand(object parameter)
@@ -215,13 +222,17 @@ namespace RequestManager.ViewModels
                     {
                         updatedOnly = false;
                         await requestRepository.AddSingleLineAsync(line);
-                       
+                        
                     }
                     else
                     {
 
                        await requestRepository.UpdateLineAsync(line);
-                       
+                        foreach (LineProperties lineProperties in LineProperties)
+                        {
+                            lineProperties.LineId = SelectedLine.Id;
+                        }
+                       await requestRepository.AddPropertiesAsync(LineProperties);
                     }
                 }
                 if (updatedOnly)
@@ -260,6 +271,7 @@ namespace RequestManager.ViewModels
             
             requestRepository = new RequestRepository(new Data.RequestManagerContext());
             PushRequestDataCommand = new LambdaCommand(OnPushRequestDataCommand, CanPushRequestDataExecuted);
+            
         }
     }
 }

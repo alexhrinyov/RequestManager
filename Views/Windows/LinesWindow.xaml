@@ -102,11 +102,11 @@
 
         </StackPanel>
 
-        <ScrollViewer  x:Name="AllLines" Grid.Row="1">
-            <DataGrid   Margin="5,10,5,5" 
+        <ScrollViewer   Grid.Row="1">
+            <DataGrid  x:Name="AllLines" Margin="5,10,5,5" 
                       AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=Lines,
                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        
+                        SelectedItem="{Binding SelectedLine, Mode=TwoWay}"
                        >
                 <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
@@ -187,7 +187,8 @@
                           IsChecked="{Binding Path = CabelBoxesChecked, Mode=TwoWay}"/>
             </StackPanel>
             <ScrollViewer Height="200" >
-                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*">
+                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
+                           ItemsSource="{Binding LineProperties, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <DataGrid.Resources>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = TerminalHeadersSwgChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy2" Data="{Binding Path = TerminalHeadersTRChecked}"/>
@@ -198,43 +199,43 @@
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy7" Data="{Binding Path = CabelBoxesChecked}"/>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="N участка" MinWidth="40"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="IP" MinWidth="30"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Длина, м" MinWidth="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Углов, шт" MinWidth="80"  ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Тщ, шт" MinWidth="80"
+                        <DataGridTextColumn Header="N участка" MinWidth="40" Binding="{Binding OrderNumber}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="IP" MinWidth="30" Binding="{Binding IP}"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Длина, м" MinWidth="80" Binding="{Binding Length}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Углов, шт" MinWidth="80" Binding="{Binding Elbows}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тщ, шт" MinWidth="80" Binding="{Binding TermSwg}"
                           Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy}}">                 
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Ттр, шт"  MinWidth="50"
+                        <DataGridTextColumn Header="Ттр, шт"  MinWidth="50" Binding="{Binding TermTr}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy2}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Т-углов, шт"  MinWidth="70"
+                        <DataGridTextColumn Header="Т-углов, шт"  MinWidth="70" Binding="{Binding TElbows}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy3}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Пож.барьеров, шт"  MinWidth="140"  
+                        <DataGridTextColumn Header="Пож.барьеров, шт"  MinWidth="140"  Binding="{Binding FireBarriers}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy4}}"                    >
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Заглушек, шт"  MinWidth="90" 
+                        <DataGridTextColumn Header="Заглушек, шт"  MinWidth="90" Binding="{Binding EndCaps}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy5}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Компенс., шт "  MinWidth="100" 
+                        <DataGridTextColumn Header="Компенс., шт "  MinWidth="100" Binding="{Binding ExpJoints}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy7}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Каб. ввод конц., шт"  MinWidth="135" 
+                        <DataGridTextColumn Header="Каб. ввод конц., шт"  MinWidth="135" Binding="{Binding EndBoxes}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy6}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Каб. ввод, центр., шт"  MinWidth="150"
+                        <DataGridTextColumn Header="Каб. ввод, центр., шт"  MinWidth="150" Binding="{Binding CenterEndBoxes}"
                             Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
                             Source={StaticResource ColumnCheckedProxy7}}">
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Кронштейнов, шт" MinWidth="120"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Кронштейнов, шт" MinWidth="120" Binding="{Binding FixingHangers}"  ></DataGridTextColumn>
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
