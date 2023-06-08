@@ -34,9 +34,28 @@ namespace RequestManager.ViewModels
         public Line SelectedLine
         {
             get => selectedLine;
-            set {
+            set
+            {
                 Set(ref selectedLine, value);
-                LineProperties = requestRepository.SelectPropertiesById(SelectedLine.Id).ToList();
+                if (SelectedLine != null)
+                {
+                    if (SelectedLine.Id != 0)
+                    {
+                        LineProperties = requestRepository.SelectPropertiesById(SelectedLine.Id).ToList();
+                    }
+                    else
+                    {
+                        if (SelectedLine.IP != "Различные")
+                        {
+                            LineProperties = new List<LineProperties>() { new LineProperties() { IP = SelectedLine.IP, OrderNumber = 1 } };
+                        }
+                        else
+                            LineProperties = new List<LineProperties>() { new LineProperties() { OrderNumber = 1 } };
+                    }
+
+                }
+                else
+                    LineProperties = new List<LineProperties>();
             } 
 
         }
@@ -207,7 +226,7 @@ namespace RequestManager.ViewModels
         {
             foreach (var line in Lines)
             {
-                if (line != null)
+                if ((line != null)&&(line.Id == 0))
                 {
                     line.RequestId = RequestId;
                 }    
@@ -222,7 +241,12 @@ namespace RequestManager.ViewModels
                     {
                         updatedOnly = false;
                         await requestRepository.AddSingleLineAsync(line);
-                        
+                        foreach (LineProperties lineProperties in LineProperties)
+                        {
+                            //добавление объекта в бд
+                            lineProperties.LineId = line.Id;
+                            await requestRepository.AddSinglePropertiesAsync(lineProperties);
+                        }
                     }
                     else
                     {
@@ -230,9 +254,17 @@ namespace RequestManager.ViewModels
                        await requestRepository.UpdateLineAsync(line);
                         foreach (LineProperties lineProperties in LineProperties)
                         {
-                            lineProperties.LineId = SelectedLine.Id;
+                            if (lineProperties.Id == 0)
+                            {
+                                lineProperties.LineId = line.Id;
+                                await requestRepository.AddSinglePropertiesAsync(lineProperties);
+                            }
+                            else
+                            {
+                                await requestRepository.UpdateSinglePropertiesAsync(lineProperties);
+                            }
+
                         }
-                       await requestRepository.AddPropertiesAsync(LineProperties);
                     }
                 }
                 if (updatedOnly)
