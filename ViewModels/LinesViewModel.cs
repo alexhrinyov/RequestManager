@@ -41,22 +41,27 @@ namespace RequestManager.ViewModels
                 {
                     if (SelectedLine.Id != 0)
                     {
-                        LineProperties = requestRepository.SelectPropertiesById(SelectedLine.Id).ToList();
+                        LineProperties = SelectedLine.Properties;
                     }
-                    else
-                    {
-                        if (SelectedLine.IP != "Различные")
-                        {
-                            LineProperties = new List<LineProperties>() { new LineProperties() { IP = SelectedLine.IP, OrderNumber = 1 } };
-                        }
-                        else
-                            LineProperties = new List<LineProperties>() { new LineProperties() { OrderNumber = 1 } };
-                    }
+                    //else
+                    //{
+                    //    if (SelectedLine.IP != "Различные")
+                    //    {
+                    //        LineProperties = new List<LineProperties>() { new LineProperties() { IP = SelectedLine.IP, OrderNumber = 1 } };
+                    //    }
+                    //    else
+                    //        LineProperties = new List<LineProperties>() { new LineProperties() { OrderNumber = 1 } };
+                    //}
 
                 }
                 else
+                {
+                    
                     LineProperties = new List<LineProperties>();
-            } 
+                    
+                }
+                    
+            }
 
         }
 
@@ -64,8 +69,13 @@ namespace RequestManager.ViewModels
         public IEnumerable<LineProperties> LineProperties
         {
             get => lineProperties;
-            set => Set(ref lineProperties, value);
+            set
+            {
+                Set(ref lineProperties, value);
+                SelectedLine.Properties = LineProperties;
+            }
         }
+
 
         private int requestId;
         public int RequestId
@@ -226,10 +236,10 @@ namespace RequestManager.ViewModels
         {
             foreach (var line in Lines)
             {
-                if ((line != null)&&(line.Id == 0))
+                if ((line != null) && (line.Id == 0))
                 {
                     line.RequestId = RequestId;
-                }    
+                }
             }
             try
             {
@@ -241,7 +251,7 @@ namespace RequestManager.ViewModels
                     {
                         updatedOnly = false;
                         await requestRepository.AddSingleLineAsync(line);
-                        foreach (LineProperties lineProperties in LineProperties)
+                        foreach (LineProperties lineProperties in line.Properties)
                         {
                             //добавление объекта в бд
                             lineProperties.LineId = line.Id;
@@ -252,7 +262,7 @@ namespace RequestManager.ViewModels
                     {
 
                        await requestRepository.UpdateLineAsync(line);
-                        foreach (LineProperties lineProperties in LineProperties)
+                        foreach (LineProperties lineProperties in line.Properties)
                         {
                             if (lineProperties.Id == 0)
                             {
