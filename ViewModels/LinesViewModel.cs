@@ -37,30 +37,18 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref selectedLine, value);
+                if (SelectedLine == null)
+                    LineProperties = new List<LineProperties>();
                 if (SelectedLine != null)
                 {
-                    if (SelectedLine.Id != 0)
+                    if (SelectedLine.Properties.Count() != 0)
+                        LineProperties = SelectedLine.Properties.ToList();
+                    else
                     {
-                        LineProperties = SelectedLine.Properties;
+                        LineProperties = new List<LineProperties>();  
                     }
-                    //else
-                    //{
-                    //    if (SelectedLine.IP != "Различные")
-                    //    {
-                    //        LineProperties = new List<LineProperties>() { new LineProperties() { IP = SelectedLine.IP, OrderNumber = 1 } };
-                    //    }
-                    //    else
-                    //        LineProperties = new List<LineProperties>() { new LineProperties() { OrderNumber = 1 } };
-                    //}
-
-                }
-                else
-                {
-                    
-                    LineProperties = new List<LineProperties>();
-                    
-                }
-                    
+                        
+                }        
             }
 
         }
@@ -72,7 +60,7 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref lineProperties, value);
-                SelectedLine.Properties = LineProperties;
+                
             }
         }
 
@@ -298,13 +286,13 @@ namespace RequestManager.ViewModels
         private bool CanPushRequestDataExecuted(object p) => true;
         #endregion
 
-        //public ICommand LineSelectionChangedCommand { get; }
-        //private async void OnLineSelectionChangedCommand(object parameter)
+        //public ICommand PropFocusLostCommand { get; }
+        //private async void OnPropFocusLostCommand(object parameter)
         //{
-            
+        //    MessageBox.Show("Hello");
         //}
 
-        //private bool CanLineSelectionChangedCommandExecuted(object p) => true;
+        //private bool CanPropFocusLostCommandExecuted(object p) => true;
 
 
 

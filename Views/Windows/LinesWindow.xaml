@@ -188,7 +188,7 @@
             </StackPanel>
             <ScrollViewer Height="200" >
                 <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
-                           ItemsSource="{Binding LineProperties, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                           ItemsSource="{Binding LineProperties, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
                     <DataGrid.Resources>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = TerminalHeadersSwgChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy2" Data="{Binding Path = TerminalHeadersTRChecked}"/>
