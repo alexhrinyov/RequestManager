@@ -1,5 +1,6 @@
 ﻿using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
+using RequestManager.Infrastructure;
 using RequestManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,19 @@ namespace RequestManager.Views.Windows
             CurrentRequestDate.Content = selectedRequest.CreationDate;
             
             var requestRepository = new RequestRepository(new Data.RequestManagerContext());
-            //((LinesViewModel)this.DataContext).Lines = new List<Line>()
-            //{ new Line() {RequestId = selectedRequest.Id , ConductorsMaterial= "Cu", Configuration ="dfsaf", Finish = "dfsf",
-            //Start = "df", IP = Data.Enums.ProtectionDegree.IP68, Id = 2, RatedCurrent = 5000, Name = "2323"}};
-            //((LinesViewModel)this.DataContext).Lines = new List<Line>();
-            ((LinesViewModel)this.DataContext).Lines = requestRepository.SelectLinesById(selectedRequest.Id).ToList();
+            //((LinesViewModel)this.DataContext).Lines = requestRepository.SelectLinesById(selectedRequest.Id).ToList();
+            
+            
+
+
+            ((LinesViewModel)this.DataContext).LinesDomain = new List<LineDomain>()
+            { new LineDomain() { ConductorsMaterial="Cu", Configuration = "3P+N",
+                Finish = "Fin", IP = "68", Name="Line", RatedCurrent=630, RequestId=2, Start="St", 
+                Properties = new List<LinePropertiesDomain>() } };
+
+            var mapper = MapperConfig.InitializeAutomapper();
+            List<Line> lines = requestRepository.SelectLinesById(1).ToList();
+            List<LineDomain> linesDTO = mapper.Map<List<Line>, List<LineDomain>>(lines);
         }
     }
 }

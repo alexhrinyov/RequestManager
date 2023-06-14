@@ -30,6 +30,16 @@ namespace RequestManager.ViewModels
             set => Set(ref lines, value);
         }
 
+        private IEnumerable<LineDomain> linesDomain;
+        /// <summary>
+        /// Список линий в запросе
+        /// </summary>
+        public IEnumerable<LineDomain> LinesDomain
+        {
+            get { return linesDomain; }
+            set => Set(ref linesDomain, value);
+        }
+
         private Line selectedLine;
         public Line SelectedLine
         {
@@ -37,30 +47,41 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref selectedLine, value);
-                if (SelectedLine == null)
-                    LineProperties = new List<LineProperties>();
-                if (SelectedLine != null)
-                {
-                    if (SelectedLine.Properties.Count() != 0)
-                        LineProperties = SelectedLine.Properties.ToList();
-                    else
-                    {
-                        LineProperties = new List<LineProperties>();  
-                    }
+                //if (SelectedLine == null)
+                //    LineProperties = new List<LineProperties>();
+                //if (SelectedLine != null)
+                //{
+                //    if (SelectedLine.Properties.Count() != 0)
+                //        LineProperties = SelectedLine.Properties.ToList();
+                //    else
+                //    {
+                //        LineProperties = new List<LineProperties>();  
+                //    }
                         
-                }        
+                //}
+                
+            }
+
+        }
+        private LineDomain selectedLineDomain;
+        public LineDomain SelectedLineDomain
+        {
+            get => selectedLineDomain;
+            set
+            {
+                Set(ref selectedLineDomain, value);
             }
 
         }
 
-        private IEnumerable< LineProperties> lineProperties;
+        private IEnumerable<LineProperties> lineProperties;
         public IEnumerable<LineProperties> LineProperties
         {
             get => lineProperties;
             set
             {
                 Set(ref lineProperties, value);
-                
+
             }
         }
 
@@ -301,6 +322,7 @@ namespace RequestManager.ViewModels
             
             requestRepository = new RequestRepository(new Data.RequestManagerContext());
             PushRequestDataCommand = new LambdaCommand(OnPushRequestDataCommand, CanPushRequestDataExecuted);
+            
             
         }
     }
