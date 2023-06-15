@@ -12,7 +12,6 @@ namespace RequestManager.Data.Entities
 
     internal class LineDomain : ViewModels.Base.ViewModel
     {
-        private int id;
         private int requestId;
         private string? name;
         private string? start;
@@ -23,9 +22,7 @@ namespace RequestManager.Data.Entities
         private string iP;
         private IEnumerable<LinePropertiesDomain>? properties;
 
-        public int Id {
-            get { return id; }
-        }
+        public int Id { get; set; }
         public int RequestId {
             get { return requestId; }
             set => Set(ref requestId, value);
@@ -74,5 +71,6 @@ namespace RequestManager.Data.Entities
             get { return properties; }
             set => Set(ref properties, value);
         }
+        public Request Request { get; set; }
     }
 }

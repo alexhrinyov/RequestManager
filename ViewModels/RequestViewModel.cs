@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using AutoMapper;
+using Azure.Core;
 using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
 using RequestManager.Infrastructure.Commands;
@@ -198,7 +199,7 @@ namespace RequestManager.ViewModels
         #region Команды
         #region Пробная команда
         public ICommand ShowMessageCommand { get; }
-        private void OnShowMessageCommandExecuted(object p)
+        public void OnShowMessageCommandExecuted(object p)
         {
             MessageBox.Show("Hello, World!");
         }
@@ -211,7 +212,7 @@ namespace RequestManager.ViewModels
         /// Переход на следующую страницу создания запроса
         /// </summary>
         public ICommand ShowAnotherPageCommand { get; }
-        private void OnShowAnotherPageExecuted(object p)
+        public void OnShowAnotherPageExecuted(object p)
         {
            // Меняем текущую страницу и устанавливаем ей текущий контекст viewModel
             CurrentPage = new RequestMaster();
@@ -224,7 +225,7 @@ namespace RequestManager.ViewModels
 
         #region Удаление менеджера/исполнителя
         public ICommand DeleteItemCommand { get; }
-        private void OnDeleteItemCommandExecuted(object parameter)
+        public void OnDeleteItemCommandExecuted(object parameter)
         {
             switch (parameter)
             {
@@ -252,7 +253,7 @@ namespace RequestManager.ViewModels
 
         #region Добавление менеджера/исполнителя
         public ICommand AddItemCommand { get; }
-        private void OnAddItemCommandExecuted(object parameter)
+        public void OnAddItemCommandExecuted(object parameter)
         {
             switch (parameter)
             {
@@ -281,7 +282,7 @@ namespace RequestManager.ViewModels
 
         #region Изменение сервера
         public ICommand SaveServerCommand { get; }
-        private void OnSaveServerCommandExecuted(object parameter)
+        public void OnSaveServerCommandExecuted(object parameter)
         {
             if (ConfigObject.Server != null)
             {
@@ -296,7 +297,7 @@ namespace RequestManager.ViewModels
         #region Добавить запрос
 
         public ICommand CreateRequest { get; }
-        private async void OnAddRequestCommandExecuted(object parameter)
+        public async void OnAddRequestCommandExecuted(object parameter)
         {
             var year = DateTime.Now.Year.ToString();
             var month = MonthsList[DateTime.Now.Month].ToString();
@@ -333,9 +334,9 @@ namespace RequestManager.ViewModels
         #region Удалить запрос
 
         public ICommand DeleteRequestCommand { get; }
-        
 
-        private async void OnDeleteRequestCommandExecuted(object parameter)
+
+        public async void OnDeleteRequestCommandExecuted(object parameter)
         {
 
             Request request = SelectedRequest;
@@ -356,7 +357,7 @@ namespace RequestManager.ViewModels
         #region Открыть директорию запроса
         public ICommand OpenDirectoryCommand { get; }
 
-        private void OnOpenDirectoryCommand(object parameter)
+        public void OnOpenDirectoryCommand(object parameter)
         {
             var dir = ((Request)parameter).FolderPath;
             if (Directory.Exists(dir))
@@ -375,7 +376,7 @@ namespace RequestManager.ViewModels
         #region Перейти к запросу
         public ICommand ShowLinesWindowCommand { get; }
 
-        private void OnShowLinesWindowCommand(object parameter)
+        public void OnShowLinesWindowCommand(object parameter)
         {
             if (SelectedRequest != null)
             {
@@ -399,7 +400,8 @@ namespace RequestManager.ViewModels
 
         public RequestViewModel()
         {
-          
+            
+ 
             //свойство-объект команды инициализируется, передаются параметры методов(исполняющий метод и разрешающий)
             ShowMessageCommand = new LambdaCommand(OnShowMessageCommandExecuted, CanShowMessageCommandExecuted);
             ShowAnotherPageCommand = new LambdaCommand(OnShowAnotherPageExecuted, CanShowAnotherPageExecuted);

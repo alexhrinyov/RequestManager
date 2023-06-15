@@ -1,4 +1,5 @@
-﻿using RequestManager.Data.Entities;
+﻿using AutoMapper;
+using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
 using RequestManager.Infrastructure;
 using RequestManager.ViewModels;
@@ -15,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Windows.Forms.LinkLabel;
 using Line = RequestManager.Data.Entities.Line;
 
 namespace RequestManager.Views.Windows
@@ -24,6 +26,7 @@ namespace RequestManager.Views.Windows
     /// </summary>
     public partial class LinesWindow : Window
     {
+        internal IMapper _mapper;
         public LinesWindow(Request selectedRequest)
         {
             
@@ -33,19 +36,12 @@ namespace RequestManager.Views.Windows
             CurrentRequestDate.Content = selectedRequest.CreationDate;
             
             var requestRepository = new RequestRepository(new Data.RequestManagerContext());
-            //((LinesViewModel)this.DataContext).Lines = requestRepository.SelectLinesById(selectedRequest.Id).ToList();
+            var Lines = requestRepository.SelectLinesById(selectedRequest.Id).ToList();
+            ((LinesViewModel)this.DataContext).Mapper = MapperConfig.InitializeAutomapper();
+
+            ((LinesViewModel)this.DataContext).LinesDomain =
+                ((LinesViewModel)this.DataContext).Mapper.Map<List<Line>, List<LineDomain>>(Lines);
             
-            
-
-
-            ((LinesViewModel)this.DataContext).LinesDomain = new List<LineDomain>()
-            { new LineDomain() { ConductorsMaterial="Cu", Configuration = "3P+N",
-                Finish = "Fin", IP = "68", Name="Line", RatedCurrent=630, RequestId=2, Start="St", 
-                Properties = new List<LinePropertiesDomain>() } };
-
-            var mapper = MapperConfig.InitializeAutomapper();
-            List<Line> lines = requestRepository.SelectLinesById(1).ToList();
-            List<LineDomain> linesDTO = mapper.Map<List<Line>, List<LineDomain>>(lines);
         }
     }
 }

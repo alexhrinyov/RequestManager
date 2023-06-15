@@ -16,8 +16,11 @@ namespace RequestManager.Infrastructure
             var config = new MapperConfiguration(cfg =>
             {
                 //Configuring Employee and EmployeeDTO
-                cfg.CreateMap<Line, LineDomain>();
-                cfg.CreateMap<List<Line>, List<LineDomain>>().ForMember("Item", opt => opt.Ignore());
+                cfg.CreateMap<LineProperties, LinePropertiesDomain>();
+                cfg.CreateMap<TapOffBoxes, TapOffBoxesDomain>();
+                cfg.CreateMap<Reductions, ReductionsDomain>();
+                cfg.CreateMap<Line, LineDomain>()/*.ForMember("Properties", opt => opt.Ignore())*/;
+                
                 //Any Other Mapping Configuration ....
             });
             //Create an Instance of Mapper and return that Instance

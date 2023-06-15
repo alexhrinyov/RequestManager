@@ -1,4 +1,5 @@
-﻿using RequestManager.Data.Entities;
+﻿using AutoMapper;
+using RequestManager.Data.Entities;
 using RequestManager.Data.Repositories;
 using RequestManager.Infrastructure.Commands;
 using RequestManager.ViewModels.Base;
@@ -47,19 +48,6 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref selectedLine, value);
-                //if (SelectedLine == null)
-                //    LineProperties = new List<LineProperties>();
-                //if (SelectedLine != null)
-                //{
-                //    if (SelectedLine.Properties.Count() != 0)
-                //        LineProperties = SelectedLine.Properties.ToList();
-                //    else
-                //    {
-                //        LineProperties = new List<LineProperties>();  
-                //    }
-                        
-                //}
-                
             }
 
         }
@@ -70,20 +58,15 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref selectedLineDomain, value);
+                if (SelectedLineDomain?.Properties == null)
+                {
+                    SelectedLineDomain.Properties = new List<LinePropertiesDomain>() { new LinePropertiesDomain { OrderNumber=1} };
+                }
+                
             }
 
         }
-
-        private IEnumerable<LineProperties> lineProperties;
-        public IEnumerable<LineProperties> LineProperties
-        {
-            get => lineProperties;
-            set
-            {
-                Set(ref lineProperties, value);
-
-            }
-        }
+        public IMapper Mapper { get; set; }
 
 
         private int requestId;
@@ -243,64 +226,22 @@ namespace RequestManager.ViewModels
 
         private async void OnPushRequestDataCommand(object parameter)
         {
-            foreach (var line in Lines)
+            
+            foreach (LineDomain line in LinesDomain)
             {
-                if ((line != null) && (line.Id == 0))
+                if (line.Id == 0)
                 {
                     line.RequestId = RequestId;
-                }
-            }
-            try
-            {
-                bool updatedOnly = true;
-                foreach (Line line in Lines)
-                {
-                    
-                    if (line.Id == 0)
+                    foreach (LinePropertiesDomain lpd in line.Properties)
                     {
-                        updatedOnly = false;
-                        await requestRepository.AddSingleLineAsync(line);
-                        foreach (LineProperties lineProperties in line.Properties)
+                        if (lpd.Id == 0)
                         {
-                            //добавление объекта в бд
-                            lineProperties.LineId = line.Id;
-                            await requestRepository.AddSinglePropertiesAsync(lineProperties);
-                        }
-                    }
-                    else
-                    {
-
-                       await requestRepository.UpdateLineAsync(line);
-                        foreach (LineProperties lineProperties in line.Properties)
-                        {
-                            if (lineProperties.Id == 0)
-                            {
-                                lineProperties.LineId = line.Id;
-                                await requestRepository.AddSinglePropertiesAsync(lineProperties);
-                            }
-                            else
-                            {
-                                await requestRepository.UpdateSinglePropertiesAsync(lineProperties);
-                            }
-
+                            lpd.LineId = line.Id;
                         }
                     }
                 }
-                if (updatedOnly)
-                {
-                    MessageBox.Show("Обновлено", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Изменения отправлены в базу данных", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                }
-
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+           
             
         }
 
