@@ -82,9 +82,15 @@
         </StackPanel>
         <!--Таблица с данными-->
         <ScrollViewer Grid.Row="1" >
-            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path= Requests, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedRequest}">
+            <DataGrid Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
+                      ItemsSource="{Binding Path= Requests, UpdateSourceTrigger=PropertyChanged}" 
+                      SelectedItem="{Binding Path=SelectedRequest}" 
+                      IsReadOnly="True">
                 <DataGrid.Resources>
                     <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = ExecutorChecked}"   />
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                    </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Path=Id,  StringFormat=id{0}}" ></DataGridTextColumn>

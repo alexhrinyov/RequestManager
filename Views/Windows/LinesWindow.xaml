@@ -171,6 +171,8 @@
             <Label Content="Свойства выбранной линии:"/>
             <StackPanel Margin="15,0,15,0" Orientation="Horizontal">
                 <Label Content="Видны столбцы:"/>
+                <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="IP" 
+                          IsChecked="{Binding Path = IPChecked, Mode=TwoWay}"/>
                 <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т щ" 
                           IsChecked="{Binding Path = TerminalHeadersSwgChecked, Mode=TwoWay}"/>
                 <CheckBox VerticalAlignment="Center" Margin="10,0,10,0" Content="Т тр"
@@ -197,10 +199,14 @@
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy5" Data="{Binding Path = CapsChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy6" Data="{Binding Path = ExpChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy7" Data="{Binding Path = CabelBoxesChecked}"/>
+                        <vm1:BindingProxy x:Key="ColumnCheckedProxy8" Data="{Binding Path = IPChecked}"/>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="N участка" MinWidth="40" Binding="{Binding OrderNumber}" ></DataGridTextColumn>
-                        <DataGridTextColumn Header="IP" MinWidth="30" Binding="{Binding IP}"  ></DataGridTextColumn>
+                        <DataGridTextColumn Header="IP" MinWidth="30" Binding="{Binding IP}"
+                            Visibility="{Binding Path=Data, Converter={StaticResource BoolToVisibilityConverter},
+                            Source={StaticResource ColumnCheckedProxy8}}">
+                            </DataGridTextColumn>
                         <DataGridTextColumn Header="Длина, м" MinWidth="80" Binding="{Binding Length}" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Углов, шт" MinWidth="80" Binding="{Binding Elbows}" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Тщ, шт" MinWidth="80" Binding="{Binding TermSwg}"

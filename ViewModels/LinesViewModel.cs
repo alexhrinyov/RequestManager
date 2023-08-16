@@ -20,6 +20,7 @@ namespace RequestManager.ViewModels
         #region Свойства
 
         private RequestRepository requestRepository;
+        public IMapper Mapper { get; set; }
 
         private IEnumerable<Line> lines;
         /// <summary>
@@ -41,16 +42,16 @@ namespace RequestManager.ViewModels
             set => Set(ref linesDomain, value);
         }
 
-        private Line selectedLine;
-        public Line SelectedLine
-        {
-            get => selectedLine;
-            set
-            {
-                Set(ref selectedLine, value);
-            }
+        //private Line selectedLine;
+        //public Line SelectedLine
+        //{
+        //    get => selectedLine;
+        //    set
+        //    {
+        //        Set(ref selectedLine, value);
+        //    }
 
-        }
+        //}
         private LineDomain selectedLineDomain;
         public LineDomain SelectedLineDomain
         {
@@ -58,15 +59,20 @@ namespace RequestManager.ViewModels
             set
             {
                 Set(ref selectedLineDomain, value);
-                if (SelectedLineDomain?.Properties == null)
+                if (SelectedLineDomain != null)
                 {
-                    SelectedLineDomain.Properties = new List<LinePropertiesDomain>() { new LinePropertiesDomain { OrderNumber=1} };
+                    if (SelectedLineDomain.Properties == null)
+                    {
+                        SelectedLineDomain.Properties = new List<LinePropertiesDomain>() { new LinePropertiesDomain { OrderNumber = 1, IP = selectedLineDomain.IP ?? selectedLineDomain.IP } };
+
+                    }
+                    if(SelectedLineDomain.IP == "Различные")
+                        IPChecked = true;
                 }
-                
             }
 
         }
-        public IMapper Mapper { get; set; }
+        
 
 
         private int requestId;
@@ -77,6 +83,30 @@ namespace RequestManager.ViewModels
         }
 
         #region Видимость колонок
+
+
+        /// <summary>
+        /// Отмеченность чекбокса IP    
+        /// </summary>
+        /// 
+
+        private Visibility IPVisibility;
+        private bool ipChecked = false;
+
+        /// <summary>
+        /// Отмеченность чекбокса IP  
+        /// </summary>
+        public bool IPChecked
+        {
+            get => ipChecked;
+            set
+            {
+                Set(ref ipChecked, value);
+
+            }
+        }
+
+
         private Visibility terminalHeadersSwgVisibility;
 
         /// <summary>
@@ -227,18 +257,44 @@ namespace RequestManager.ViewModels
         private async void OnPushRequestDataCommand(object parameter)
         {
             
-            foreach (LineDomain line in LinesDomain)
+            foreach (LineDomain lineD in LinesDomain)
             {
-                if (line.Id == 0)
+                if (lineD.Id == 0)
                 {
-                    line.RequestId = RequestId;
-                    foreach (LinePropertiesDomain lpd in line.Properties)
+                    lineD.RequestId = RequestId;
+                    if (lineD.Properties != null)
                     {
-                        if (lpd.Id == 0)
+                        foreach (LinePropertiesDomain lpd in lineD.Properties)
                         {
-                            lpd.LineId = line.Id;
+                            //lpd.LineId = lined.Id;
+                            if (lineD.IP != "Различные")
+                            {
+                                lpd.IP = lineD.IP;
+                            }
+                            else
+                            {
+                                if (string.IsNullOrEmpty(lpd.IP))
+                                {
+                                    lpd.IP = "См. исх. данные";
+                                }
+                            }
+                            //await requestRepository.AddSinglePropertiesAsync(Mapper.Map<LineProperties>(lined));
                         }
+                        await requestRepository.AddSingleLineAsync(Mapper.Map<Line>(lineD));
+                    
                     }
+                    
+                }
+                if (lineD.Id != 0)
+                {
+
+                    //в селекте properties тоже вытаскиваются и добавляются в контекст.
+                    // поэтому далее они отслеживаются и повторные в бд не добавляются, а добавляются только новые или измененные обновляются
+                    var line = requestRepository.SelectLineById(lineD.Id);
+                    Mapper.Map<LineDomain, Line>(lineD, line);
+                    await requestRepository.UpdateLineAsync(line);
+                    
+                    
                 }
             }
            

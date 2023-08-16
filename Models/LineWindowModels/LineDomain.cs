@@ -64,7 +64,22 @@ namespace RequestManager.Data.Entities
         public string IP
         {
             get { return iP; }
-            set => Set(ref iP, value);
+            set {
+                Set(ref iP, value);
+                if (Properties != null)
+                {
+                    foreach (var prop in Properties)
+                    {
+                        if (value != "Различные")
+                            prop.IP = value;
+                        else
+                            prop.IP = "Требуется ввод";
+                    }
+                }
+                
+            } 
+
+
         }
         public IEnumerable<LinePropertiesDomain>? Properties
         {

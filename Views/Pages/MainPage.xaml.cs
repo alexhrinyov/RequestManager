@@ -1,4 +1,5 @@
 ﻿using RequestManager.Models.Config;
+using RequestManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace RequestManager.Views.Pages
             //Делаем текущий год и текущий месяц выбранными по умолчанию
             YearsBox.SelectedIndex = 0;
             MonthsBox.SelectedIndex = DateTime.Now.Month - 1;
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ((RequestViewModel)this.DataContext).ShowLinesWindowCommand.Execute(null);
         }
     }
 }

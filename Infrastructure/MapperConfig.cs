@@ -17,10 +17,12 @@ namespace RequestManager.Infrastructure
             {
                 //Configuring Employee and EmployeeDTO
                 cfg.CreateMap<LineProperties, LinePropertiesDomain>();
+                cfg.CreateMap<LinePropertiesDomain, LineProperties>();
                 cfg.CreateMap<TapOffBoxes, TapOffBoxesDomain>();
                 cfg.CreateMap<Reductions, ReductionsDomain>();
-                cfg.CreateMap<Line, LineDomain>()/*.ForMember("Properties", opt => opt.Ignore())*/;
-                
+                cfg.CreateMap<Line, LineDomain>();
+                cfg.CreateMap<LineDomain,Line>()/*.ForMember("Properties", opt => opt.Ignore())*/; ;
+
                 //Any Other Mapping Configuration ....
             });
             //Create an Instance of Mapper and return that Instance

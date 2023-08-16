@@ -383,6 +383,7 @@ namespace RequestManager.ViewModels
 
                 LinesWindow linesWindow = new LinesWindow(selectedRequest);
                 linesWindow.Show();
+                
                 // Установка датаконтекста для окна Lines(программно)
                 //_LinesViewModel = new LinesViewModel();
                 //_LinesViewModel.RequestId = selectedRequest.Id;
