@@ -105,8 +105,10 @@
         <ScrollViewer   Grid.Row="1">
             <DataGrid  x:Name="AllLines" Margin="5,10,5,5" 
                       AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Path=LinesDomain,
-                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        SelectedItem="{Binding SelectedLineDomain, Mode=TwoWay}"
+                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       
+                        SelectedItem="{Binding SelectedLineDomain, Mode=TwoWay}" SelectionChanged="AllLines_SelectionChanged"
+                       PreviewKeyDown="AllLines_PreviewKeyDown"
                        >
                 <!--<DataGridColumnHeader/>-->
                 <DataGrid.Columns>
@@ -159,10 +161,9 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Открыть папку" ></MenuItem>
                         <MenuItem Header="Копировать"></MenuItem>
                         <MenuItem Header="Вставить"></MenuItem>
-                        <MenuItem Header="Удалить"></MenuItem>
+                        <MenuItem Header="Удалить" Command="{Binding DeleteLineCommand}"></MenuItem>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
@@ -189,8 +190,10 @@
                           IsChecked="{Binding Path = CabelBoxesChecked, Mode=TwoWay}"/>
             </StackPanel>
             <ScrollViewer Height="200" >
-                <DataGrid  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
-                           ItemsSource="{Binding Path=SelectedLineDomain.Properties, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                <DataGrid x:Name="LineProperties"  Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
+                           ItemsSource="{Binding Path=SelectedLineDomain.Properties, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           SelectedItem="{Binding SelectedLineProperties, Mode=TwoWay}"
+                          PreviewKeyDown="LineProperties_PreviewKeyDown">
                     <DataGrid.Resources>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy" Data="{Binding Path = TerminalHeadersSwgChecked}"/>
                         <vm1:BindingProxy x:Key="ColumnCheckedProxy2" Data="{Binding Path = TerminalHeadersTRChecked}"/>
@@ -255,15 +258,21 @@
         </StackPanel>
         <DockPanel VerticalAlignment="Bottom" x:Name="AdditionalProperties" Grid.Row="3" >
             <StackPanel>
-                <Label Content="Коробки отбора мощности на участке:"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Коробки отбора мощности на участке: "/>
+                    <Label Content="{Binding Path=SelectedLineProperties.OrderNumber}"/>
+                </StackPanel>
+                
                 <ScrollViewer>
-                    <DataGrid  Height="160"  Width="400" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid x:Name="TapOffBoxes" ItemsSource="{Binding Path=SelectedLineProperties.Boxes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                              Height="160"  Width="400" Margin="5,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
+                              PreviewKeyDown="TapOffBoxes_PreviewKeyDown">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="Ном.ток, A"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="I авт.выкл., A"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="Кол-во, шт"  ></DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="Ном.ток, A" Binding="{Binding Path= RatedCurrent}"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="I авт.выкл., A" Binding="{Binding Path=CBRatedCurrent}"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во, шт" Binding="{Binding Path= Quantity}" ></DataGridTextColumn>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -276,15 +285,21 @@
                 </ScrollViewer>
             </StackPanel>
             <StackPanel>
-                <Label Margin="15,0,0,0" Content="Блоки редукции на участке:"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="15,0,0,0" Content="Блоки редукции на участке: "/>
+                    <Label Content="{Binding Path=SelectedLineProperties.OrderNumber}"/>
+                </StackPanel>
+                
                 <ScrollViewer>
-                    <DataGrid Height="160" Width="350" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*"  >
+                    <DataGrid x:Name="Reductions" ItemsSource="{Binding Path=SelectedLineProperties.Reductions, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                              Height="160" Width="350" Margin="15,10,5,5" AutoGenerateColumns="False" ColumnWidth="*" 
+                              PreviewKeyDown="Reductions_PreviewKeyDown">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="N участка"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="I1, A"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="I2, A"  ></DataGridTextColumn>
-                            <DataGridTextColumn Header="Кол-во, шт"  ></DataGridTextColumn>
+                       
+                            <DataGridTextColumn Header="I1, A" Binding="{Binding Path=FirstCurrent}"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="I2, A" Binding="{Binding Path=SecondCurrent}"  ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во, шт" Binding="{Binding Path=Quantity}"   ></DataGridTextColumn>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -297,10 +312,16 @@
                 </ScrollViewer>
             </StackPanel>
             <StackPanel>
-                <Label Margin="15,0,0,0" Content="Примечания для линии:"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="15,0,0,0" Content="Примечания для линии:"/>
+                    <Label Margin="15,0,0,0" Content="{Binding Path=SelectedLineDomain.Name}"/>
+                </StackPanel>
+                
                 <TextBox  Width="200" Height="160" FontWeight="Medium" FontStyle="Italic"
                          TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"
+                          Text="{Binding Path=SelectedLineDomain.Remarks, Mode=TwoWay}"
                            >
+                    
                 </TextBox>
             </StackPanel>
             

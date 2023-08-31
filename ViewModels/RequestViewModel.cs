@@ -348,7 +348,7 @@ namespace RequestManager.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.InnerException.Message, "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private bool CanDeleteRequestCommandExecuted(object p) => true;

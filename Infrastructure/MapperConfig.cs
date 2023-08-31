@@ -19,9 +19,11 @@ namespace RequestManager.Infrastructure
                 cfg.CreateMap<LineProperties, LinePropertiesDomain>();
                 cfg.CreateMap<LinePropertiesDomain, LineProperties>();
                 cfg.CreateMap<TapOffBoxes, TapOffBoxesDomain>();
+                cfg.CreateMap<TapOffBoxesDomain, TapOffBoxes>();
                 cfg.CreateMap<Reductions, ReductionsDomain>();
+                cfg.CreateMap<ReductionsDomain, Reductions>();
                 cfg.CreateMap<Line, LineDomain>();
-                cfg.CreateMap<LineDomain,Line>()/*.ForMember("Properties", opt => opt.Ignore())*/; ;
+                cfg.CreateMap<LineDomain, Line>();/*.ForMember("Request", opt => opt.Ignore());*/
 
                 //Any Other Mapping Configuration ....
             });

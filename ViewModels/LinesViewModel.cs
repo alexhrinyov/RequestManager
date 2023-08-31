@@ -42,6 +42,8 @@ namespace RequestManager.ViewModels
             set => Set(ref linesDomain, value);
         }
 
+       
+
         //private Line selectedLine;
         //public Line SelectedLine
         //{
@@ -72,7 +74,32 @@ namespace RequestManager.ViewModels
             }
 
         }
-        
+
+
+        private LinePropertiesDomain selectedLineProperties;
+        public LinePropertiesDomain SelectedLineProperties
+        {
+            get => selectedLineProperties;
+            set
+            {
+                Set(ref selectedLineProperties, value);
+                if (SelectedLineProperties != null)
+                {
+                    if (SelectedLineProperties.Boxes == null)
+                    {
+                        SelectedLineProperties.Boxes = new List<TapOffBoxesDomain>() ;
+
+                    }
+                    if (SelectedLineProperties.Reductions == null)
+                    {
+                        SelectedLineProperties.Reductions = new List<ReductionsDomain>();
+
+                    }
+
+                }
+            }
+
+        }
 
 
         private int requestId;
@@ -278,9 +305,26 @@ namespace RequestManager.ViewModels
                                     lpd.IP = "См. исх. данные";
                                 }
                             }
-                            //await requestRepository.AddSinglePropertiesAsync(Mapper.Map<LineProperties>(lined));
+
+                            //foreach (ReductionsDomain rD in lpd.Reductions)
+                            //{
+                            //    rD.LinePropertiesId = lpd.Id;
+                            //}
+                            //foreach (TapOffBoxesDomain bD in lpd.Boxes)
+                            //{
+                            //    bD.LinePropertiesId = lpd.Id;
+                            //}
                         }
-                        await requestRepository.AddSingleLineAsync(Mapper.Map<Line>(lineD));
+                        try
+                        {
+                            var line = Mapper.Map<Line>(lineD);
+                            await requestRepository.AddSingleLineAsync(line);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        
                     
                     }
                     
@@ -302,6 +346,23 @@ namespace RequestManager.ViewModels
         }
 
         private bool CanPushRequestDataExecuted(object p) => true;
+
+
+        public ICommand DeleteLineCommand { get; }
+        private async void OnDeleteLineCommand(object parameter)
+        {
+            if (selectedLineDomain != null)
+            {
+                if (selectedLineDomain.Id != 0)
+                    requestRepository.DeleteLineAsync(Mapper.Map<Line>(selectedLineDomain));
+                var lines = LinesDomain.ToList();
+                lines.Remove(selectedLineDomain);
+                LinesDomain = lines;
+               
+            }
+            
+        }
+        private bool CanDeleteLineExecuted(object p) => true;
         #endregion
 
         //public ICommand PropFocusLostCommand { get; }
@@ -319,7 +380,7 @@ namespace RequestManager.ViewModels
             
             requestRepository = new RequestRepository(new Data.RequestManagerContext());
             PushRequestDataCommand = new LambdaCommand(OnPushRequestDataCommand, CanPushRequestDataExecuted);
-            
+            DeleteLineCommand = new LambdaCommand(OnDeleteLineCommand, CanDeleteLineExecuted);
             
         }
     }

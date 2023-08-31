@@ -20,6 +20,7 @@ namespace RequestManager.Data.Entities
         private int ratedCurrent;
         private string conductorsMaterial;
         private string iP;
+        private string remarks;
         private IEnumerable<LinePropertiesDomain>? properties;
 
         public int Id { get; set; }
@@ -81,6 +82,14 @@ namespace RequestManager.Data.Entities
 
 
         }
+
+        public string Remarks
+        {
+            get { return remarks; }
+            set => Set(ref remarks, value);
+        }
+
+
         public IEnumerable<LinePropertiesDomain>? Properties
         {
             get { return properties; }

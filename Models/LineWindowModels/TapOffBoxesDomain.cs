@@ -9,11 +9,32 @@ namespace RequestManager.Data.Entities
 {
     internal class TapOffBoxesDomain : ViewModels.Base.ViewModel
     {
-        public int Id { get; set; }
-        public int LinePropertiesId { get; set; }
-        public int RatedCurrent { get; set; }
-        public int? CBRatedCurrent { get; set; }
-        public int Quantity { get; set; }
+        private int id;
+        private LinePropertiesDomain lineProperties;
+        private int ratedCurrent;
+        private int? cBRatedCurrent;
+        private int quantity;
+        public int Id {
+            get { return id; }
+       
+        }
+        public LinePropertiesDomain LineProperties
+        {
+            get { return lineProperties; }
+            set => Set(ref lineProperties, value);
+        }
+        public int RatedCurrent {
+            get { return ratedCurrent; }
+            set => Set(ref ratedCurrent, value);
+        }
+        public int? CBRatedCurrent {
+            get { return cBRatedCurrent; }
+            set => Set(ref cBRatedCurrent, value);
+        }
+        public int Quantity {
+            get { return quantity; }
+            set => Set(ref quantity, value);
+        }
 
     }
 }

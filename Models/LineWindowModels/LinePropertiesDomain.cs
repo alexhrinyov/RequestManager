@@ -12,9 +12,9 @@ namespace RequestManager.Data.Entities
     {
         private int id;
         private int lineId;
-        private List<Reductions> reductions;
+        private List<ReductionsDomain> reductions;
         private string? remarks;
-        private List<TapOffBoxes>? boxes;
+        private List<TapOffBoxesDomain>? boxes;
         private int fixingHangers;
         private int? centerBoxes;
         private int? endBoxes;
@@ -105,7 +105,7 @@ namespace RequestManager.Data.Entities
             set => Set(ref fixingHangers, value);
         }
 
-        public List<TapOffBoxes>? Boxes
+        public List<TapOffBoxesDomain>? Boxes
         {
             get { return boxes; }
             set => Set(ref boxes, value);
@@ -116,7 +116,7 @@ namespace RequestManager.Data.Entities
             get { return remarks; }
             set => Set(ref remarks, value);
         }
-        public List<Reductions>? Reductions
+        public List<ReductionsDomain>? Reductions
         {
             get { return reductions; }
             set => Set(ref reductions, value);
